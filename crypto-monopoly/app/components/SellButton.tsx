@@ -6,7 +6,7 @@ import { useSessionWallet } from "@magicblock-labs/gum-react-sdk";
 import { useGameState } from "@/contexts/GameStateProvider";
 import { GAME_DATA_SEED, gameDataPDA, program } from "@/utils/anchor";
 
-const BuyButton = () => {
+const SellButton = () => {
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const sessionWallet = useSessionWallet();
@@ -15,29 +15,29 @@ const BuyButton = () => {
   const [isLoadingMainWallet, setIsLoadingMainWallet] = useState(false);
   const [transactionCounter, setTransactionCounter] = useState(0);
 
-  const onChopClick = useCallback(async () => {
+  const onSellClick = useCallback(async () => {
     setIsLoadingSession(true);
     if (!playerDataPDA || !sessionWallet) return;
     setTransactionCounter(transactionCounter + 1);
 
     try {
-      const transaction = await program.methods
-        .chopTree(GAME_DATA_SEED, transactionCounter)
-        .accounts({
-          player: playerDataPDA,
-          gameData: gameDataPDA,
-          signer: sessionWallet.publicKey!,
-          sessionToken: sessionWallet.sessionToken,
-        })
-        .transaction();
+      // const transaction = await program.methods
+      //   .chopTree(GAME_DATA_SEED, transactionCounter)
+      //   .accounts({
+      //     player: playerDataPDA,
+      //     gameData: gameDataPDA,
+      //     signer: sessionWallet.publicKey!,
+      //     sessionToken: sessionWallet.sessionToken,
+      //   })
+      //   .transaction();
 
-      const txids = await sessionWallet.signAndSendTransaction!(transaction);
+      // const txids = await sessionWallet.signAndSendTransaction!(transaction);
 
-      if (txids && txids.length > 0) {
-        console.log("Transaction sent:", txids);
-      } else {
-        console.error("Failed to send transaction");
-      }
+      // if (txids && txids.length > 0) {
+      //   console.log("Transaction sent:", txids);
+      // } else {
+      //   console.error("Failed to send transaction");
+      // }
     } catch (error: any) {
       console.log("error", `Chopping failed! ${error?.message}`);
     } finally {
@@ -45,60 +45,26 @@ const BuyButton = () => {
     }
   }, [sessionWallet]);
 
-  const onChopMainWalletClick = useCallback(async () => {
-    if (!publicKey || !playerDataPDA) return;
-
-    setIsLoadingMainWallet(true);
-
-    try {
-      const transaction = await program.methods
-        .chopTree(GAME_DATA_SEED, transactionCounter)
-        .accounts({
-          player: playerDataPDA,
-          gameData: gameDataPDA,
-          signer: publicKey,
-          sessionToken: null,
-        })
-        .transaction();
-
-      const txSig = await sendTransaction(transaction, connection, {
-        skipPreflight: true,
-      });
-      console.log(`https://explorer.solana.com/tx/${txSig}?cluster=devnet`);
-    } catch (error: any) {
-      console.log("error", `Chopping failed! ${error?.message}`);
-    } finally {
-      setIsLoadingMainWallet(false);
-    }
-  }, [publicKey, playerDataPDA, connection]);
+  
 
   return (
     <>
       {publicKey && gameState && (
-        <VStack>
-          <Image src="/Beaver.png" alt="Energy Icon" width={64} height={64} />
-          <HStack>
-            {sessionWallet && sessionWallet.sessionToken != null && (
-              <Button
-                isLoading={isLoadingSession}
-                onClick={onChopClick}
-                width="175px"
-              >
-                Chop tree Session
-              </Button>
-            )}
+        <HStack>
+          {sessionWallet && sessionWallet.sessionToken != null && (
             <Button
-              isLoading={isLoadingMainWallet}
-              onClick={onChopMainWalletClick}
+              isLoading={isLoadingSession}
+              onClick={onSellClick}
               width="175px"
             >
-              Chop tree MainWallet
+              Sell Property
             </Button>
-          </HStack>
-        </VStack>
+          )}
+
+        </HStack>
       )}
     </>
   );
 };
 
-export default BuyButton;
+export default SellButton;

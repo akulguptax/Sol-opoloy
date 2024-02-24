@@ -76,7 +76,7 @@ const ChopTreeButton = () => {
     <>
       {publicKey && gameState && (
         <VStack>
-          <Image src="/Beaver.png" alt="Energy Icon" width={64} height={64} />
+          {/* <Image src="/Beaver.png" alt="Energy Icon" width={64} height={64} /> */}
           <HStack>
             {sessionWallet && sessionWallet.sessionToken != null && (
               <Button
@@ -84,7 +84,7 @@ const ChopTreeButton = () => {
                 onClick={onChopClick}
                 width="175px"
               >
-                Chop Sunny Session
+                Chop tree Session
               </Button>
             )}
             <Button

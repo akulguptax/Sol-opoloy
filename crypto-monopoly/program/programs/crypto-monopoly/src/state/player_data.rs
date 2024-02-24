@@ -2,7 +2,7 @@ use crate::constants::*;
 use anchor_lang::prelude::*;
 
 // #[account]
-#[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq)]
+#[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq, Copy)]
 pub struct Player {
     pub playerId: u8,
     pub acct: Pubkey,

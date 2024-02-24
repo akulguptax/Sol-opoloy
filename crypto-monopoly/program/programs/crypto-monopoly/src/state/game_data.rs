@@ -6,9 +6,6 @@ use crate::state::prop::Prop;
 use crate::state::player_data::Player;
 
 
-
-
-
 #[account]
 pub struct GameData {
     buyin : u32,
@@ -61,14 +58,6 @@ impl GameData {
     
 
     pub fn startTurn(&mut self, p : u8) -> MoveResult {
-        // somehow map all these player Pubkeys to transaction sender
-        // if self.state != State::PreRoll {
-        //     return MoveResult::Error; // TODO - better error handling
-        // }
-        // let p = self.getPlayerIndex(&player)?;
-        // if self.turn != p {
-        //     return false
-        // };
         
         // roll dice
         self.last_roll = 12;

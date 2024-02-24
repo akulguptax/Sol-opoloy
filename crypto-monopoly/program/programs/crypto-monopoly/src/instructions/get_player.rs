@@ -1,5 +1,4 @@
 pub use crate::errors::*;
-use crate::state::game_data::GameData;
 use crate::instructions::whose_turn::WhoseTurn;
 use crate::state::player_data::Player;
 use anchor_lang::prelude::*;

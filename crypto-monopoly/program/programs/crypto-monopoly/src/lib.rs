@@ -5,7 +5,7 @@ pub mod constants;
 pub mod errors;
 pub mod instructions;
 pub mod state;
-
+pub use crate::state::player_data::Player;
 use instructions::*;
 use crate::constants::*;
 
@@ -36,6 +36,10 @@ pub mod crypto_monopoly {
 
     pub fn start_turn(ctx: Context<InitPlayer>, _level_seed: String) -> Result<MoveResult> {
         return Ok(start_turn::start_turn(ctx)?);
+    }
+
+    pub fn get_player(ctx: Context<WhoseTurn>, _level_seed: String) -> Result<Player> {
+        return Ok(get_player::get_player(ctx)?);
     }
 
     // This function lets the player chop a tree and get 1 wood. The session_auth_or macro

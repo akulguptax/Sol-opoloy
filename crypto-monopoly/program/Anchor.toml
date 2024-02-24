@@ -1,7 +1,7 @@
 [features]
 seeds = false
 [programs.localnet]
-snake = "MkabCfyUD6rBTaYHpgKBBpBo5qzWA2pK2hrGGKMurJt"
+crypto_monopoly = "MkabCfyUD6rBTaYHpgKBBpBo5qzWA2pK2hrGGKMurJt"
 
 [registry]
 url = "https://anchor.projectserum.com"

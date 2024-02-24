@@ -18,7 +18,7 @@ export default function Home() {
         <WalletMultiButton />
       </Flex>
       <VStack>
-        <Heading>Snake</Heading>
+        <Heading>CryptoMonopoly</Heading>
         {!publicKey && <Text>Connect to devnet wallet!</Text>}
         <DisplayGameState />
         <InitPlayerButton />

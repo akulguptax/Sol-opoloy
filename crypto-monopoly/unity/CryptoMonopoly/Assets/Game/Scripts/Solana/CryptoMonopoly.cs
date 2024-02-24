@@ -12,12 +12,12 @@ using Solana.Unity.Rpc.Core.Http;
 using Solana.Unity.Rpc.Core.Sockets;
 using Solana.Unity.Rpc.Types;
 using Solana.Unity.Wallet;
-using Snake;
-using Snake.Program;
-using Snake.Errors;
-using Snake.Accounts;
+using CryptoMonopoly;
+using CryptoMonopoly.Program;
+using CryptoMonopoly.Errors;
+using CryptoMonopoly.Accounts;
 
-namespace Snake
+namespace CryptoMonopoly
 {
     namespace Accounts
     {
@@ -100,16 +100,16 @@ namespace Snake
 
     namespace Errors
     {
-        public enum SnakeErrorKind : uint
+        public enum CryptoMonopolyErrorKind : uint
         {
             NotEnoughEnergy = 6000U,
             WrongAuthority = 6001U
         }
     }
 
-    public partial class SnakeClient : TransactionalBaseClient<SnakeErrorKind>
+    public partial class CryptoMonopolyClient : TransactionalBaseClient<CryptoMonopolyErrorKind>
     {
-        public SnakeClient(IRpcClient rpcClient, IStreamingRpcClient streamingRpcClient, PublicKey programId) : base(rpcClient, streamingRpcClient, programId)
+        public CryptoMonopolyClient(IRpcClient rpcClient, IStreamingRpcClient streamingRpcClient, PublicKey programId) : base(rpcClient, streamingRpcClient, programId)
         {
         }
 
@@ -179,25 +179,25 @@ namespace Snake
 
         public async Task<RequestResult<string>> SendInitPlayerAsync(InitPlayerAccounts accounts, string levelSeed, PublicKey feePayer, Func<byte[], PublicKey, byte[]> signingCallback, PublicKey programId)
         {
-            Solana.Unity.Rpc.Models.TransactionInstruction instr = Program.SnakeProgram.InitPlayer(accounts, levelSeed, programId);
+            Solana.Unity.Rpc.Models.TransactionInstruction instr = Program.CryptoMonopolyProgram.InitPlayer(accounts, levelSeed, programId);
             return await SignAndSendTransaction(instr, feePayer, signingCallback);
         }
 
         public async Task<RequestResult<string>> SendChopTreeAsync(ChopTreeAccounts accounts, string levelSeed, ushort counter, PublicKey feePayer, Func<byte[], PublicKey, byte[]> signingCallback, PublicKey programId)
         {
-            Solana.Unity.Rpc.Models.TransactionInstruction instr = Program.SnakeProgram.ChopTree(accounts, levelSeed, counter, programId);
+            Solana.Unity.Rpc.Models.TransactionInstruction instr = Program.CryptoMonopolyProgram.ChopTree(accounts, levelSeed, counter, programId);
             return await SignAndSendTransaction(instr, feePayer, signingCallback);
         }
 
         public async Task<RequestResult<string>> SendSuperChopTreeAsync(SuperChopTreeAccounts accounts, string levelSeed, ushort counter, PublicKey feePayer, Func<byte[], PublicKey, byte[]> signingCallback, PublicKey programId)
         {
-            Solana.Unity.Rpc.Models.TransactionInstruction instr = Program.SnakeProgram.SuperChopTree(accounts, levelSeed, counter, programId);
+            Solana.Unity.Rpc.Models.TransactionInstruction instr = Program.CryptoMonopolyProgram.SuperChopTree(accounts, levelSeed, counter, programId);
             return await SignAndSendTransaction(instr, feePayer, signingCallback);
         }
 
-        protected override Dictionary<uint, ProgramError<SnakeErrorKind>> BuildErrorsDictionary()
+        protected override Dictionary<uint, ProgramError<CryptoMonopolyErrorKind>> BuildErrorsDictionary()
         {
-            return new Dictionary<uint, ProgramError<SnakeErrorKind>>{{6000U, new ProgramError<SnakeErrorKind>(SnakeErrorKind.NotEnoughEnergy, "Not enough energy")}, {6001U, new ProgramError<SnakeErrorKind>(SnakeErrorKind.WrongAuthority, "Wrong Authority")}, };
+            return new Dictionary<uint, ProgramError<CryptoMonopolyErrorKind>>{{6000U, new ProgramError<CryptoMonopolyErrorKind>(CryptoMonopolyErrorKind.NotEnoughEnergy, "Not enough energy")}, {6001U, new ProgramError<CryptoMonopolyErrorKind>(CryptoMonopolyErrorKind.WrongAuthority, "Wrong Authority")}, };
         }
     }
 
@@ -240,7 +240,7 @@ namespace Snake
             public PublicKey SystemProgram { get; set; }
         }
 
-        public static class SnakeProgram
+        public static class CryptoMonopolyProgram
         {
             public static Solana.Unity.Rpc.Models.TransactionInstruction InitPlayer(InitPlayerAccounts accounts, string levelSeed, PublicKey programId)
             {

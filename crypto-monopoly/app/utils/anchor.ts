@@ -1,5 +1,5 @@
 import { Program, IdlAccounts, BN } from "@coral-xyz/anchor"
-import { Snake, IDL } from "../idl/snake"
+import { CryptoMonopoly, IDL } from "../idl/crypto-monopoly"
 import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js"
 import { WrappedConnection } from "./wrappedConnection";
 
@@ -13,11 +13,11 @@ export const METAPLEX_READAPI = "https://devnet.helius-rpc.com/?api-key=78065db3
 // Here you can basically use what ever seed you want. For example one per level or city or whatever.
 export const GAME_DATA_SEED = "level_2";
 
-// Snake game program ID
+// CryptoMonopoly game program ID
 const programId = new PublicKey("MkabCfyUD6rBTaYHpgKBBpBo5qzWA2pK2hrGGKMurJt")
 
 // Create the program interface using the idl, program ID, and provider
-export const program = new Program<Snake>(IDL, programId, {
+export const program = new Program<CryptoMonopoly>(IDL, programId, {
   connection: CONNECTION,
 })
 
@@ -27,8 +27,8 @@ export const [gameDataPDA] = PublicKey.findProgramAddressSync(
 )
 
 // Player Data Account Type from Idl
-export type PlayerData = IdlAccounts<Snake>["playerData"]
-export type GameData = IdlAccounts<Snake>["gameData"]
+export type PlayerData = IdlAccounts<CryptoMonopoly>["playerData"]
+export type GameData = IdlAccounts<CryptoMonopoly>["gameData"]
 
 // Constants for the game
 export const TIME_TO_REFILL_ENERGY: BN = new BN(60)

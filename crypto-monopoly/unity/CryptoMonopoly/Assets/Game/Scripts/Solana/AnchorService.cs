@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Frictionless;
 using Game.Scripts.Ui;
-using Snake;
-using Snake.Accounts;
-using Snake.Program;
+using CryptoMonopoly;
+using CryptoMonopoly.Accounts;
+using CryptoMonopoly.Program;
 using Solana.Unity.Programs;
 using Solana.Unity.Programs.Models;
 using Solana.Unity.Rpc.Core.Http;
@@ -50,7 +50,7 @@ public class AnchorService : MonoBehaviour
     private PublicKey PlayerDataPDA;
     private PublicKey GameDataPDA;
     private bool _isInitialized;
-    private SnakeClient anchorClient;
+    private CryptoMonopolyClient anchorClient;
     private int blockingTransactionsInProgress;
     private int nonBlockingTransactionsInProgress;
     private long? sessionValidUntil;
@@ -92,7 +92,7 @@ public class AnchorService : MonoBehaviour
 
         FindPDAs(account);
 
-        anchorClient = new SnakeClient(Web3.Rpc, Web3.WsRpc, AnchorProgramIdPubKey);
+        anchorClient = new CryptoMonopolyClient(Web3.Rpc, Web3.WsRpc, AnchorProgramIdPubKey);
 
         await SubscribeToPlayerDataUpdates();
         await SubscribeToGameDataUpdates();
@@ -221,7 +221,7 @@ public class AnchorService : MonoBehaviour
         accounts.Signer = Web3.Account;
         accounts.SystemProgram = SystemProgram.ProgramIdKey;
 
-        var initTx = SnakeProgram.InitPlayer(accounts, levelSeed, AnchorProgramIdPubKey);
+        var initTx = CryptoMonopolyProgram.InitPlayer(accounts, levelSeed, AnchorProgramIdPubKey);
         tx.Add(initTx);
 
         if (true)
@@ -337,7 +337,7 @@ public class AnchorService : MonoBehaviour
             transaction.FeePayer = sessionWallet.Account.PublicKey;
             chopTreeAccounts.Signer = sessionWallet.Account.PublicKey;
             chopTreeAccounts.SessionToken = sessionWallet.SessionTokenPDA;
-            var chopInstruction = SnakeProgram.ChopTree(chopTreeAccounts, levelSeed, transactionCounter, AnchorProgramIdPubKey);
+            var chopInstruction = CryptoMonopolyProgram.ChopTree(chopTreeAccounts, levelSeed, transactionCounter, AnchorProgramIdPubKey);
             transaction.Add(chopInstruction);
             Debug.Log("Sign and send chop tree with session");
             await SendAndConfirmTransaction(sessionWallet, transaction, "Chop Tree with session.", isBlocking: false, onSucccess: onSuccess);
@@ -346,7 +346,7 @@ public class AnchorService : MonoBehaviour
         {
             transaction.FeePayer = Web3.Account.PublicKey;
             chopTreeAccounts.Signer = Web3.Account.PublicKey;
-            var chopInstruction = SnakeProgram.ChopTree(chopTreeAccounts, levelSeed, transactionCounter, AnchorProgramIdPubKey);
+            var chopInstruction = CryptoMonopolyProgram.ChopTree(chopTreeAccounts, levelSeed, transactionCounter, AnchorProgramIdPubKey);
             transaction.Add(chopInstruction);
             Debug.Log("Sign and send init without session");
             await SendAndConfirmTransaction(Web3.Wallet, transaction, "Chop Tree without session.", onSucccess: onSuccess);

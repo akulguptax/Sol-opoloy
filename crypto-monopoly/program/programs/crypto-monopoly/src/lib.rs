@@ -10,7 +10,7 @@ use instructions::*;
 declare_id!("MkabCfyUD6rBTaYHpgKBBpBo5qzWA2pK2hrGGKMurJt");
 
 #[program]
-pub mod snake {
+pub mod crypto_monopoly {
 
     use super::*;
 

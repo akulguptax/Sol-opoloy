@@ -59,10 +59,10 @@ Its done like this (after you have build the program):
 ```bash
 cd program 
 dotnet tool install Solana.Unity.Anchor.Tool <- run once
-dotnet anchorgen -i target/idl/snake.json -o target/idl/Snake.cs
+dotnet anchorgen -i target/idl/crypto-monopoly.json -o target/idl/CryptoMonopoly.cs
 ```
 
-(Replace snake with the name of your program)
+(Replace crypto-monopoly with the name of your program)
 
 then copy the c# code into the unity project.
 
@@ -233,7 +233,7 @@ useEffect(() => {
     const [pda] = PublicKey.findProgramAddressSync(
         [Buffer.from("player", "utf8"), 
         publicKey.toBuffer()],
-        new PublicKey(Snake_PROGRAM_ID)
+        new PublicKey(CryptoMonopoly_PROGRAM_ID)
       );
     try {
       program.account.playerData.fetch(pda).then((data) => {
@@ -295,7 +295,7 @@ To generate the client code you can follow the instructions here: https://solana
 ```bash
 cd program 
 dotnet tool install Solana.Unity.Anchor.Tool <- run once
-dotnet anchorgen -i target/idl/snake.json -o target/idl/Snake.cs
+dotnet anchorgen -i target/idl/crypto-monopoly.json -o target/idl/CryptoMonopoly.cs
 ```
 
 ### Session keys

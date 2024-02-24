@@ -1,6 +1,6 @@
-export type Snake = {
+export type CryptoMonopoly = {
   "version": "0.1.0",
-  "name": "snake",
+  "name": "crypto-monopoly",
   "instructions": [
     {
       "name": "initPlayer",
@@ -143,9 +143,9 @@ export type Snake = {
   ]
 };
 
-export const IDL: Snake = {
+export const IDL: CryptoMonopoly = {
   "version": "0.1.0",
-  "name": "snake",
+  "name": "crypto-monopoly",
   "instructions": [
     {
       "name": "initPlayer",

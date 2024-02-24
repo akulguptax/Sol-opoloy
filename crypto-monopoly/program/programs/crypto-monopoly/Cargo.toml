@@ -1,12 +1,12 @@
 [package]
-name = "snake"
+name = "crypto_monopoly"
 version = "0.1.0"
 description = "Created with Anchor"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "snake"
+name = "crypto_monopoly"
 
 [features]
 no-entrypoint = []

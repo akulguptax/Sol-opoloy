@@ -1,5 +1,5 @@
 using System;
-using Snake.Accounts;
+using CryptoMonopoly.Accounts;
 using Solana.Unity.SDK;
 using Solana.Unity.Wallet.Bip39;
 using UnityEngine;

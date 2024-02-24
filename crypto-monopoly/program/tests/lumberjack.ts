@@ -1,12 +1,12 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
-import { Snake } from "../target/types/snake";
+import { CryptoMonopoly } from "../target/types/crypto_monopoly";
 
-describe("snake", () => {
+describe("crypto-monopoly", () => {
 
   const provider = anchor.AnchorProvider.env()
   anchor.setProvider(provider)
-  const program = anchor.workspace.Snake as Program<Snake>;
+  const program = anchor.workspace.CryptoMonopoly as Program<CryptoMonopoly>;
   const payer = provider.wallet as anchor.Wallet
   const gameDataSeed = "gameData";
 

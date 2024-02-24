@@ -16,8 +16,8 @@ pub struct GameData {
     pub state: State,
     props: [Prop; 40],
     players: [Player; 4],
-    n : u8,
-    last_roll : u8,
+    n : usize,
+    last_roll : usize,
 }
 
 impl GameData {
@@ -55,96 +55,97 @@ impl GameData {
     }
 
     pub fn lastRoll(&self) -> u8 {
-        return self.last_roll;
+        return self.last_roll.try_into().unwrap();
     }
 
     
 
-    // pub fn startTurn(&self, p : usize) -> MoveResult {
-    //     // somehow map all these player Pubkeys to transaction sender
-    //     // if self.state != State::PreRoll {
-    //     //     return MoveResult::Error; // TODO - better error handling
-    //     // }
-    //     // let p = self.getPlayerIndex(&player)?;
-    //     // if self.turn != p {
-    //     //     return false
-    //     // };
+    pub fn startTurn(&mut self, p : usize) -> MoveResult {
+        // somehow map all these player Pubkeys to transaction sender
+        // if self.state != State::PreRoll {
+        //     return MoveResult::Error; // TODO - better error handling
+        // }
+        // let p = self.getPlayerIndex(&player)?;
+        // if self.turn != p {
+        //     return false
+        // };
         
-    //     // roll dice
-    //     self.last_roll = 12;
+        // roll dice
+        self.last_roll = 12;
         
-    //     // use dice to update move
-    //     let new_pos = self.players[p].makeMove(roll);
+        // use dice to update move
+        let new_pos = self.players[p].makeMove(self.last_roll);
 
-    //     // act on new position
-    //     if self.props[new_pos].ownerId == p {
-    //         // your own property, do nothing
-    //         self.turn = (self.turn + 1)%self.n;
-    //         return MoveResult::Noop;
-    //     } else if self.props[new_pos].ownerId >= 0 {
-    //         // someone else owns this, pay rent!!
-    //         self.players[p].balance -= self.props[new_pos].rent;
-    //         self.players[self.props[new_pos].ownerId] += self.props[new_pos].rent;
-    //         self.turn = (self.turn + 1)%self.n;
-    //         return MoveResult::Rent;
-    //     } else {
-    //         // no one owns it, you have the option to buy it
-    //         self.state = State::PostRoll;
-    //         return MoveResult::BuyOption;
-    //     }
+        // act on new position
+        if self.props[new_pos].ownerId == p {
+            // your own property, do nothing
+            self.turn = (self.turn + 1)%self.n;
+            return MoveResult::Noop;
+        } else if self.props[new_pos].ownerId >= 0 {
+            // someone else owns this, pay rent!!
+            let paid : u64 = self.props[new_pos].rent.try_into().unwrap();
+            self.players[p].balance -= paid;
+            self.players[self.props[new_pos].ownerId].balance += paid;
+            self.turn = (self.turn + 1)%self.n;
+            return MoveResult::Rent;
+        } else {
+            // no one owns it, you have the option to buy it
+            self.state = State::PostRoll;
+            return MoveResult::BuyOption;
+        }
+    }
+
+    // pub fn getPlayer(&self, p : Pubkey) -> Player {
+    //     return self.players[self.getPlayerIndex(p)?];
     // }
 
-//     pub fn getPlayer(&self, p : Pubkey) -> Player {
-//         return self.players[self.getPlayerIndex(p)?];
-//     }
+    // pub fn getProp(&self, ind : usize) -> Prop {
+    //     return self.props[ind];
+    // }
 
-//     pub fn getProp(&self, ind : usize) -> Prop {
-//         return self.props[ind];
-//     }
+    // pub fn buyProp(&mut self, player : Pubkey, pos : usize, payment : u32) -> bool {
+    //     let p = self.getPlayerIndex(&player)?;
 
-//     pub fn buyProp(&mut self, player : Pubkey, pos : usize, payment : u32) -> bool {
-//         let p = self.getPlayerIndex(&player)?;
+    //     // enforce:
+    //     if payment < self.players[p].balance {
+    //         // enough funds
+    //         return false;
+    //     } else if self.turn != p {
+    //         // player turn
+    //         return false;
+    //     } else if self.state != State::PostRoll {
+    //         // player in correct state
+    //         return false;
+    //     } else if pos != self.players[p].pos {
+    //         // pos is where the player is currently sitting
+    //         return false;
+    //     } else if self.props[pos].price != payment {
+    //         // payment is right amount
+    //         return false;
+    //     }
 
-//         // enforce:
-//         if payment < self.players[p].balance {
-//             // enough funds
-//             return false;
-//         } else if self.turn != p {
-//             // player turn
-//             return false;
-//         } else if self.state != State::PostRoll {
-//             // player in correct state
-//             return false;
-//         } else if pos != self.players[p].pos {
-//             // pos is where the player is currently sitting
-//             return false;
-//         } else if self.props[pos].price != payment {
-//             // payment is right amount
-//             return false;
-//         }
+    //     // change
+    //     //      player balance
+    //     players[p].balance -= payment;
 
-//         // change
-//         //      player balance
-//         players[p].balance -= payment;
+    //     //      property owner
+    //     props[pos].bought(p);
 
-//         //      property owner
-//         props[pos].bought(p);
+    //     return true;
+    // }
 
-//         return true;
-//     }
+    // pub fn firesaleProp(&mut self, player : Pubkey, pos : usize) -> bool {
+    //     let p = self.getPlayerIndex(&player)?;
+    //     // enforce that player is owner of this pos
+    //     if p != props[pos].ownerId {
+    //         return false;
+    //     }
+    //     // release prop
+    //     props[pos].fireSold();
 
-//     pub fn firesaleProp(&mut self, player : Pubkey, pos : usize) -> bool {
-//         let p = self.getPlayerIndex(&player)?;
-//         // enforce that player is owner of this pos
-//         if p != props[pos].ownerId {
-//             return false;
-//         }
-//         // release prop
-//         props[pos].fireSold();
-
-//         // then transfer funds
-//         players[p].balance += props[pos].price;
-//     }
+    //     // then transfer funds
+    //     players[p].balance += props[pos].price;
+    // }
 
 //     pub fn getLoan(&mut self, player : Pubkey, amt : u64) -> bool {
 //         // TODO - figure out how to accept Sol here

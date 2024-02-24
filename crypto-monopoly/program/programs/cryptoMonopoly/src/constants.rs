@@ -1,3 +1,5 @@
+use anchor_lang::prelude::*;
+
 pub const TIME_TO_REFILL_ENERGY: i64 = 60;
 pub const MAX_ENERGY: u64 = 100;
 pub const MAX_WOOD_PER_TREE: u64 = 100000;
@@ -10,19 +12,21 @@ pub const FIRESALE_DISCOUNT : f32 = 0.75; // discount for fireselling property
 pub const DEFAULT_IR : f64 = 0.0001; // discount for fireselling property
 pub const LOAN_TERM : u8 = 5;
 
-pub const enum Colors {
+#[derive(AnchorDeserialize, AnchorSerialize)]
+pub enum Colors {
     None,
     Brown,
     Orange,
     Pink,
-    Light_blue,
+    LightBlue,
     Red,
     Yellow,
     Green,
     Blue
 }
 
-pub const enum State {
+#[derive(AnchorDeserialize, AnchorSerialize)]
+pub enum State {
     Empty,
     GameSetupProgress,
     GameSetupComplete,
@@ -31,7 +35,8 @@ pub const enum State {
     AfterGame
 }
 
-pub const enum MoveResult {
+#[derive(AnchorDeserialize, AnchorSerialize)]
+pub enum MoveResult {
     Noop,
     Rent,
     BuyOption,

@@ -16,24 +16,24 @@ pub struct Prop {
 
 impl Prop {
     pub fn clear(&mut self) -> Result<()> {
-        id = -1;
-        price = DEFAULT_PRICE;
-        color = Colors::None;
-        rent = 0;
-        ownerId = -1;
-        hasMono = false;
-        name = "";
+        self.id = -1;
+        self.price = DEFAULT_PRICE;
+        self.color = Colors::None;
+        self.rent = 0;
+        self.ownerId = -1;
+        self.hasMono = false;
+        self.name = "";
         return Ok(());
     }
 
     pub fn bought(&mut self, pid : i8) -> Result<()>{
-        ownerId = pid;
+        self.ownerId = pid;
         // TODO - implement hasMono update
         return Ok(());
     }
 
     pub fn fireSold(&mut self) -> Result<()>{
-        ownerId = -1;
+        self.ownerId = -1;
         // TODO - implement hasMono update
         return Ok(());
     }

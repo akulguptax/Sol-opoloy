@@ -26,7 +26,7 @@ impl Player {
         self.pos = 50;
         self.solOwed = 0;
         
-        return OK(());
+        return Ok(());
     }
 
     pub fn init(&mut self, pid : u8, acc : Pubkey) -> Result<()>{
@@ -34,11 +34,11 @@ impl Player {
         self.acct = acc;
         self.balance = INIT_BALANCE;
         self.pos = 0;
-        return OK(());
+        return Ok(());
     }
 
-    pub fn move(delta : u8) -> u8 {
-        self.pos = (pos+delta)%40;
+    pub fn makeMove(&mut self, delta : u8) -> u8 {
+        self.pos = (self.pos+delta)%40;
         if self.pos < delta {
             self.balance += PASS_GO;
         }

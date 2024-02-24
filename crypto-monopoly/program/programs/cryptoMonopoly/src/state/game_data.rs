@@ -54,39 +54,45 @@ impl GameData {
         return self.players[self.turn].acct;
     }
 
-//     pub fn startTurn(&self, player : Pubkey) -> MoveResult {
-//         // somehow map all these player Pubkeys to transaction sender
-//         if self.state != State::PreRoll {
-//             return MoveResult::Error; // TODO - better error handling
-//         }
-//         let p = self.getPlayerIndex(&player)?;
-//         if self.turn != p {
-            // return false
-            // };
-        
-//         // roll dice
-//         self.last_roll = 12;
-        
-//         // use dice to update move
-//         let new_pos = self.players[p].move(roll);
+    pub fn lastRoll(&self) -> u8 {
+        return self.last_roll;
+    }
 
-//         // act on new position
-//         if self.props[new_pos].ownerId == p {
-//             // your own property, do nothing
-//             self.turn = (self.turn + 1)%self.n;
-//             return MoveResult::Noop;
-//         } else if self.props[new_pos].ownerId >= 0 {
-//             // someone else owns this, pay rent!!
-//             self.players[p].balance -= self.props[new_pos].rent;
-//             self.players[self.props[new_pos].ownerId] += self.props[new_pos].rent;
-//             self.turn = (self.turn + 1)%self.n;
-//             return MoveResult::Rent;
-//         } else {
-//             // no one owns it, you have the option to buy it
-//             self.state = State::PostRoll;
-//             return MoveResult::Buy;
-//         }
-//     }
+    
+
+    // pub fn startTurn(&self, player : Pubkey) -> MoveResult {
+    //     // somehow map all these player Pubkeys to transaction sender
+    //     if self.state != State::PreRoll {
+    //         return MoveResult::Error; // TODO - better error handling
+    //     }
+    //     let p = self.getPlayerIndex(&player)?;
+    //     if self.turn != p {
+    //         return false
+    //         };
+        
+    //     // roll dice
+    //     self.last_roll = 12;
+        
+    //     // use dice to update move
+    //     let new_pos = self.players[p].move(roll);
+
+    //     // act on new position
+    //     if self.props[new_pos].ownerId == p {
+    //         // your own property, do nothing
+    //         self.turn = (self.turn + 1)%self.n;
+    //         return MoveResult::Noop;
+    //     } else if self.props[new_pos].ownerId >= 0 {
+    //         // someone else owns this, pay rent!!
+    //         self.players[p].balance -= self.props[new_pos].rent;
+    //         self.players[self.props[new_pos].ownerId] += self.props[new_pos].rent;
+    //         self.turn = (self.turn + 1)%self.n;
+    //         return MoveResult::Rent;
+    //     } else {
+    //         // no one owns it, you have the option to buy it
+    //         self.state = State::PostRoll;
+    //         return MoveResult::Buy;
+    //     }
+    // }
 
 //     pub fn getPlayer(&self, p : Pubkey) -> Player {
 //         return self.players[self.getPlayerIndex(p)?];

@@ -20,6 +20,8 @@ import SellButton from "@/components/SellButton";
 import Board from "@/components/Board";
 import RollDice from "@/components/RollDice";
 import Image from "next/image";
+import PlayerModal from "@/components/PlayerModal";
+import PlayerTable from "@/components/PlayerTable";
 
 interface Property {
   name: string;
@@ -38,6 +40,9 @@ export default function Home() {
       <VStack>
         <Image src="/logo.png" alt="Logo" width={256} height={256} />
         <Heading>Crypto-Monopoly</Heading>
+        <br></br>
+        <PlayerTable />
+        <br></br>
         {!publicKey && <Text>Connect to devnet wallet!</Text>}
         <DisplayGameState />
         <InitPlayerButton />

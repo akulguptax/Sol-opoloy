@@ -8,8 +8,8 @@ use crate::state::player_data::Player;
 
 
 
-#[account]
 
+#[account]
 pub struct GameData {
     buyin : u32,
     pub turn: u8,
@@ -95,9 +95,9 @@ impl GameData {
         }
     }
 
-    // pub fn getPlayer(&self, p : Pubkey) -> Player {
-    //     return self.players[self.getPlayerIndex(p)?];
-    // }
+    pub fn getPlayer(&self, p : &Pubkey) -> Result<Player> {
+        return Ok(self.players[self.getPlayerIndex(p)? as usize]);
+    }
 
     // pub fn getProp(&self, ind : u8) -> Prop {
     //     return self.props[ind];

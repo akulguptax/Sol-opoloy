@@ -10,5 +10,5 @@ pub fn start_turn(ctx: Context<InitPlayer>) -> Result<MoveResult> {
         ctx.accounts.game_data.turn as u8 != p {
         return err!(GameErrorCode::NotYourTurn);
     }
-    return Ok((ctx.accounts.game_data.startTurn(p)));
+    return Ok(ctx.accounts.game_data.startTurn(p));
 }

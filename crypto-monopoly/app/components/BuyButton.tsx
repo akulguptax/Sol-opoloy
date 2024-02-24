@@ -30,6 +30,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ playerId, propertyId }) => {
       // set prop in gameData to who owns bought
       // playerData add the prop
       //
+      
       // const transaction = await program.methods
       //   .chopTree(GAME_DATA_SEED, transactionCounter)
       //   .accounts({

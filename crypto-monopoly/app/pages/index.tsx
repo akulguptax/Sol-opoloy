@@ -40,14 +40,13 @@ export default function Home() {
       <VStack>
         <Image src="/logo.png" alt="Logo" width={256} height={256} />
         <Heading>Crypto-Monopoly</Heading>
-
+        <InitPlayerButton />
         {!publicKey ? (
           <Text>Connect to devnet wallet!</Text>
         ) : (
           <>
             <PlayerTable />
             <DisplayGameState />
-            <InitPlayerButton />
             {/* <SessionKeyButton /> */}
             {/* <ChopTreeButton /> */}
             <HStack>

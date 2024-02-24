@@ -14,7 +14,7 @@ export const METAPLEX_READAPI = "https://devnet.helius-rpc.com/?api-key=78065db3
 export const GAME_DATA_SEED = "level_2";
 
 // CryptoMonopoly game program ID
-const programId = new PublicKey("MkabCfyUD6rBTaYHpgKBBpBo5qzWA2pK2hrGGKMurJt")
+const programId = new PublicKey("3KGcThLuJfwZ2nfZMH9ZbYnUdDLDt3zNphxXMTaumugx")
 
 // Create the program interface using the idl, program ID, and provider
 export const program = new Program<CryptoMonopoly>(IDL, programId, {

@@ -1,20 +1,14 @@
 pub use crate::errors::*;
-use crate::constants::*;
 use crate::state::game_data::GameData;
 use anchor_lang::prelude::*;
 
-// TODO - make this accept SOL
-pub fn init_player(ctx: Context<InitPlayer>) -> Result<()> {
-    if ctx.accounts.game_data.state!=State::GameSetupProgress{
-        return err!(GameErrorCode::NonEmptyGameState);
-    }
-    ctx.accounts.game_data.onInitPlayer(ctx.accounts.signer.key());
-    Ok(())
+pub fn whose_turn(ctx: Context<WhoseTurn>) -> Result<Pubkey> {
+    return Ok(ctx.accounts.game_data.whoseTurn());
 }
 
 #[derive(Accounts)]
 #[instruction(level_seed: String)]
-pub struct InitPlayer<'info> {
+pub struct WhoseTurn<'info> {
     #[account(
         init_if_needed,
         payer = signer,
@@ -23,7 +17,7 @@ pub struct InitPlayer<'info> {
         bump,
     )]
     pub game_data: Account<'info, GameData>,
-
+    
     #[account(mut)]
     pub signer: Signer<'info>,
     pub system_program: Program<'info, System>,

@@ -40,22 +40,19 @@ impl GameData {
         self.n += 1;
         self.state = State::GameSetupProgress;
         if self.n==4 {
-            State::GameSetupComplete;
+            self.startGame();
         }
         return Ok(());
     }
 
-//     pub fn startGame(&mut self) -> bool {
-//         if self.state != State::GameSetupComplete {
-//             return false;
-//         }
-//         self.state = State::PreRoll;
-//         self.turn = 0;
-//     }
+    fn startGame(&mut self) {
+        self.state = State::PreRoll;
+        self.turn = 0;
+    }
 
-//     pub fn whoseTurn(&self) -> Pubkey {
-//         return self.players[turn].acct;
-//     }
+    pub fn whoseTurn(&self) -> Pubkey {
+        return self.players[self.turn].acct;
+    }
 
 //     pub fn startTurn(&self, player : Pubkey) -> MoveResult {
 //         // somehow map all these player Pubkeys to transaction sender

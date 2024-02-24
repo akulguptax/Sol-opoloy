@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid, GridItem, Box } from "@chakra-ui/react";
 import BoardSquare from "./BoardSquare";
+import { Player } from "./PlayerTable";
 
 const boardData = [
   {
@@ -285,7 +286,11 @@ const boardData = [
   },
 ];
 
-const Board: React.FC = () => {
+type BoardProps = {
+  players: Player[];
+};
+
+const Board: React.FC<BoardProps> = ({ players }) => {
   const squareSize = "4vw";
   return (
     <Box width="fit-content" margin="auto" overflow="hidden">
@@ -327,6 +332,7 @@ const Board: React.FC = () => {
                 color={square.color}
                 price={square.price}
                 details={square.details}
+                // add someway to highlight square if player index matches
               />
             </GridItem>
           );

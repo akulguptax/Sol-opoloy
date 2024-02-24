@@ -14,6 +14,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import BuyButton from "./BuyButton";
 
 interface BoardSquareProps {
   name: string;
@@ -75,7 +76,8 @@ const BoardSquare: React.FC<BoardSquareProps> = ({
             </VStack>
           </ModalBody>
           <ModalFooter backgroundColor="gray.100" borderBottomRadius="lg">
-            <Button colorScheme={color} onClick={onClose}>
+            <BuyButton playerId={5} propertyId={5}></BuyButton>
+            <Button colorScheme={color} color="black" onClick={onClose}>
               Close
             </Button>
           </ModalFooter>

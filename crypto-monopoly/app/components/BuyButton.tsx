@@ -6,7 +6,12 @@ import { useSessionWallet } from "@magicblock-labs/gum-react-sdk";
 import { useGameState } from "@/contexts/GameStateProvider";
 import { GAME_DATA_SEED, gameDataPDA, program } from "@/utils/anchor";
 
-const BuyButton = () => {
+type BuyButtonProps = {
+  playerId: number;
+  propertyId: number;
+};
+
+const BuyButton: React.FC<BuyButtonProps> = ({ playerId, propertyId }) => {
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const sessionWallet = useSessionWallet();
@@ -16,11 +21,15 @@ const BuyButton = () => {
   const [transactionCounter, setTransactionCounter] = useState(0);
 
   const onBuyClick = useCallback(async () => {
+    console.log(playerId, propertyId);
     setIsLoadingSession(true);
     if (!playerDataPDA || !sessionWallet) return;
-    setTransactionCounter(transactionCounter + 1);
 
     try {
+      // Check if player can buy, if so subtract money from player
+      // set prop in gameData to who owns bought
+      // playerData add the prop
+      //
       // const transaction = await program.methods
       //   .chopTree(GAME_DATA_SEED, transactionCounter)
       //   .accounts({

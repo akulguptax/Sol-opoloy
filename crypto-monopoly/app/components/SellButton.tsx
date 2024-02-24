@@ -21,6 +21,13 @@ const SellButton = () => {
     setTransactionCounter(transactionCounter + 1);
 
     try {
+      
+      // Check if player can owns/can sell, if so add money to player
+      // set prop in gameData to null/empty
+      // playerData remove the prop
+      
+
+
       // const transaction = await program.methods
       //   .chopTree(GAME_DATA_SEED, transactionCounter)
       //   .accounts({
@@ -30,9 +37,7 @@ const SellButton = () => {
       //     sessionToken: sessionWallet.sessionToken,
       //   })
       //   .transaction();
-
       // const txids = await sessionWallet.signAndSendTransaction!(transaction);
-
       // if (txids && txids.length > 0) {
       //   console.log("Transaction sent:", txids);
       // } else {

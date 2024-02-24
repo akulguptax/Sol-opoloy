@@ -49,12 +49,12 @@ export default function Home() {
         <SessionKeyButton />
         <ChopTreeButton />
         <HStack>
-          <BuyButton />
+          {/* <BuyButton /> */}
           <SellButton />
           <RollDice />
         </HStack>
 
-        <Board />
+        <Board players={[]} />
 
         {/* <RequestAirdrop /> */}
         {/* <DisplayNfts /> */}

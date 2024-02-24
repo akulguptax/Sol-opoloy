@@ -35,3 +35,10 @@ export const TIME_TO_REFILL_ENERGY: BN = new BN(60)
 export const MAX_ENERGY = 100
 export const ENERGY_PER_TICK: BN = new BN(1)
 export const TOTAL_WOOD_AVAILABLE: BN = new BN(100000)
+
+export const INIT_BALANCE = 1000000; 
+export const PASS_GO = 200; // get 2/15 of starting each round
+export const DEFAULT_PRICE = 500000; // default MonMoney price for each property (before setting)
+export const FIRESALE_DISCOUNT = 0.75; // discount for fireselling property
+export const DEFAULT_IR = 0.0001; // discount for fireselling property
+export const LOAN_TERM = 5;

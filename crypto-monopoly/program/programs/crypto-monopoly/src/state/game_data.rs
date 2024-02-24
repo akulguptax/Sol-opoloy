@@ -12,12 +12,12 @@ use crate::state::player_data::Player;
 
 pub struct GameData {
     buyin : u32,
-    pub turn: usize,
+    pub turn: u8,
     pub state: State,
-    props: [Prop; 40],
+    props: [Prop; 28],
     players: [Player; 4],
-    n : usize,
-    last_roll : usize,
+    n : u8,
+    last_roll : u8,
 }
 
 impl GameData {
@@ -36,7 +36,7 @@ impl GameData {
         // TODO - accept SOL and make sure it matches correct
 
         let i = self.getPlayerIndex(&player)?;
-        self.players[i].init(i, player);
+        self.players[i as usize].init(i, player);
         self.n += 1;
         self.state = State::GameSetupProgress;
         if self.n==4 {
@@ -51,7 +51,7 @@ impl GameData {
     }
 
     pub fn whoseTurn(&self) -> Pubkey {
-        return self.players[self.turn].acct;
+        return self.players[self.turn as usize].acct;
     }
 
     pub fn lastRoll(&self) -> u8 {
@@ -60,7 +60,7 @@ impl GameData {
 
     
 
-    pub fn startTurn(&mut self, p : usize) -> MoveResult {
+    pub fn startTurn(&mut self, p : u8) -> MoveResult {
         // somehow map all these player Pubkeys to transaction sender
         // if self.state != State::PreRoll {
         //     return MoveResult::Error; // TODO - better error handling
@@ -74,18 +74,18 @@ impl GameData {
         self.last_roll = 12;
         
         // use dice to update move
-        let new_pos = self.players[p].makeMove(self.last_roll);
+        let new_pos = self.players[p as usize].makeMove(self.last_roll as u8);
 
         // act on new position
-        if self.props[new_pos].ownerId == p {
+        if self.props[new_pos as usize].ownerId == p {
             // your own property, do nothing
             self.turn = (self.turn + 1)%self.n;
             return MoveResult::Noop;
-        } else if self.props[new_pos].ownerId >= 0 {
+        } else if self.props[new_pos as usize].ownerId >= 0 {
             // someone else owns this, pay rent!!
-            let paid : u64 = self.props[new_pos].rent.try_into().unwrap();
-            self.players[p].balance -= paid;
-            self.players[self.props[new_pos].ownerId].balance += paid;
+            let paid : u64 = self.props[new_pos as usize].rent.try_into().unwrap();
+            self.players[p as usize].balance -= paid;
+            self.players[self.props[new_pos as usize].ownerId as usize].balance += paid;
             self.turn = (self.turn + 1)%self.n;
             return MoveResult::Rent;
         } else {
@@ -99,11 +99,11 @@ impl GameData {
     //     return self.players[self.getPlayerIndex(p)?];
     // }
 
-    // pub fn getProp(&self, ind : usize) -> Prop {
+    // pub fn getProp(&self, ind : u8) -> Prop {
     //     return self.props[ind];
     // }
 
-    // pub fn buyProp(&mut self, player : Pubkey, pos : usize, payment : u32) -> bool {
+    // pub fn buyProp(&mut self, player : Pubkey, pos : u8, payment : u32) -> bool {
     //     let p = self.getPlayerIndex(&player)?;
 
     //     // enforce:
@@ -134,7 +134,7 @@ impl GameData {
     //     return true;
     // }
 
-    // pub fn firesaleProp(&mut self, player : Pubkey, pos : usize) -> bool {
+    // pub fn firesaleProp(&mut self, player : Pubkey, pos : u8) -> bool {
     //     let p = self.getPlayerIndex(&player)?;
     //     // enforce that player is owner of this pos
     //     if p != props[pos].ownerId {
@@ -175,10 +175,10 @@ impl GameData {
 //         return true;
 //     }
 
-    pub fn getPlayerIndex(&self, p : &Pubkey) -> Result<usize> {
+    pub fn getPlayerIndex(&self, p : &Pubkey) -> Result<u8> {
         for i in 0..self.players.len() {
             if self.players[i].acct == *p {
-                return Ok(i);
+                return Ok(i as u8);
             }
         }
         return err!(GameErrorCode::PlayerIndexNotFound);

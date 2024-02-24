@@ -18,11 +18,11 @@ pub struct InitPlayer<'info> {
     #[account(
         init_if_needed,
         payer = signer,
-        space = 1000, // 8 + 8 for anchor account discriminator and the u64. Using 1000 to have space to expand easily.
+        space = 10000, // 8 + 8 for anchor account discriminator and the u64. Using 1000 to have space to expand easily.
         seeds = [level_seed.as_ref()],
         bump,
     )]
-    pub game_data: Account<'info, GameData>,
+    pub game_data: Box<Account<'info, GameData>>,
 
     #[account(mut)]
     pub signer: Signer<'info>,

@@ -760,6 +760,7 @@ version = "0.1.0"
 dependencies = [
  "anchor-lang",
  "anchor-spl",
+ "rand 0.8.5",
  "session-keys",
  "solana-program",
 ]

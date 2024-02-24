@@ -12,6 +12,9 @@ pub const FIRESALE_DISCOUNT : f32 = 0.75; // discount for fireselling property
 pub const DEFAULT_IR : f64 = 0.0001; // discount for fireselling property
 pub const LOAN_TERM : u8 = 5;
 
+pub const END_PROPS : usize = 50;
+pub const END_PLAYERS : usize = 5;
+
 
 #[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq)]
 pub enum Colors {

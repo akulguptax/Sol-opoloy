@@ -12,7 +12,8 @@ pub const FIRESALE_DISCOUNT : f32 = 0.75; // discount for fireselling property
 pub const DEFAULT_IR : f64 = 0.0001; // discount for fireselling property
 pub const LOAN_TERM : u8 = 5;
 
-#[derive(AnchorDeserialize, AnchorSerialize)]
+
+#[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq)]
 pub enum Colors {
     None,
     Brown,
@@ -25,7 +26,7 @@ pub enum Colors {
     Blue
 }
 
-#[derive(AnchorDeserialize, AnchorSerialize)]
+#[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq)]
 pub enum State {
     Empty,
     GameSetupProgress,
@@ -35,7 +36,7 @@ pub enum State {
     AfterGame
 }
 
-#[derive(AnchorDeserialize, AnchorSerialize)]
+#[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq)]
 pub enum MoveResult {
     Noop,
     Rent,

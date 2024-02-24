@@ -4,13 +4,13 @@ use anchor_lang::prelude::*;
 #[account]
 
 pub struct Player {
-    pub playerId: u8,
+    pub playerId: usize,
     pub acct: Pubkey,
     pub balance: u64,
     pub loanAmt: u64,
     pub ir: f64,
     pub termLeft: u8,
-    pub pos: u8,
+    pub pos: usize,
     pub solOwed: i64
 }
 
@@ -29,7 +29,7 @@ impl Player {
         return Ok(());
     }
 
-    pub fn init(&mut self, pid : u8, acc : Pubkey) -> Result<()>{
+    pub fn init(&mut self, pid : usize, acc : Pubkey) -> Result<()>{
         self.playerId = pid;
         self.acct = acc;
         self.balance = INIT_BALANCE;
@@ -37,7 +37,7 @@ impl Player {
         return Ok(());
     }
 
-    pub fn makeMove(&mut self, delta : u8) -> u8 {
+    pub fn makeMove(&mut self, delta : usize) -> usize {
         self.pos = (self.pos+delta)%40;
         if self.pos < delta {
             self.balance += PASS_GO;

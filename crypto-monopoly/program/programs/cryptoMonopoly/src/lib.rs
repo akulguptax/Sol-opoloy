@@ -19,6 +19,19 @@ pub mod crypto_monopoly {
         return Ok(());
     }
 
+    pub fn init_player(ctx: Context<InitPlayer>, _level_seed: String) -> Result<()> {
+        init_player::init_player(ctx);
+        return Ok(());
+    }
+
+    pub fn whose_turn(ctx: Context<WhoseTurn>, _level_seed: String) -> Result<Pubkey> {
+        return Ok(whose_turn::whose_turn(ctx)?);
+    }
+
+    pub fn get_last_roll(ctx: Context<WhoseTurn>, _level_seed: String) -> Result<u8> {
+        return Ok(get_last_roll::get_last_roll(ctx)?);
+    }
+
     // This function lets the player chop a tree and get 1 wood. The session_auth_or macro
     // lets the player either use their session token or their main wallet. (The counter is only
     // there so that the player can do multiple transactions in the same block. Without it multiple transactions

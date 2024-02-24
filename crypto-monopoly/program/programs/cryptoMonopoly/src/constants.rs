@@ -41,5 +41,4 @@ pub enum MoveResult {
     Noop,
     Rent,
     BuyOption,
-    Error
 }

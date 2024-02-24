@@ -1,18 +1,20 @@
 use crate::state::game_data::GameData;
+use crate::constants::*;
+use crate::errors::*;
 // use crate::{constants::MAX_ENERGY, GameData};
 use anchor_lang::prelude::*;
 
 pub fn init_game(ctx: Context<InitGame>) -> Result<()> {
-    ctx.accounts.game_data.initGame(ctx.accounts.buyin);
-    // ctx.accounts.player.energy = MAX_ENERGY;
-    // ctx.accounts.player.last_login = Clock::get()?.unix_timestamp;
-    // ctx.accounts.player.authority = ctx.accounts.signer.key();
-    Ok(())
+    if ctx.accounts.game_data.state != State::Empty {
+        return err!(GameErrorCode::NonEmptyGameState);
+    } 
+    ctx.accounts.game_data.onInitGame(ctx.accounts.buyin.data);
+    return Ok(());
 }
 
-#[derive(AnchorDeserialize, AnchorSerialize)]
-pub struct Myu8 {
-    data : u8,
+#[account]
+pub struct BuyinInfo {
+    pub data: u32,
 }
 
 #[derive(Accounts)]
@@ -29,7 +31,7 @@ pub struct InitGame<'info> {
     pub game_data: Account<'info, GameData>,
 
     #[account(mut)]
-    pub buyin : Account<'info, Myu8>,
+    pub buyin : Account<'info, BuyinInfo>,
 
     #[account(mut)]
     pub signer: Signer<'info>,

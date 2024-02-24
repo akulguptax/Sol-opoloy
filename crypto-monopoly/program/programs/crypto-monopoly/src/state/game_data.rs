@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 
 use crate::constants::*;
+use crate::errors::*;
 use crate::state::prop::Prop;
 use crate::state::player_data::Player;
 
@@ -11,8 +12,8 @@ use crate::state::player_data::Player;
 
 pub struct GameData {
     buyin : u32,
-    pub turn: u8,
-    state: State,
+    pub turn: usize,
+    pub state: State,
     props: [Prop; 40],
     players: [Player; 4],
     n : u8,
@@ -21,33 +22,28 @@ pub struct GameData {
 
 impl GameData {
     
-    pub fn initGame(&mut self, buyin_: u8) -> Result<()> {
-        if self.state != State::Empty {
-            return Err();
-        } 
+    pub fn onInitGame(&mut self, buyin_: u32) -> Result<()> {
         self.buyin = buyin_;
         self.n = 0;
-        for prop in self.props.iter() {
+        for prop in self.props.iter_mut() {
             prop.clear();
         }
+        self.state = State::GameSetupProgress;
         return Ok(());
     }
 
-//     pub fn initPlayer(&mut self, player : Pubkey) -> Result<()> {
-//         // TODO - accept SOL and make sure it matches correct
-//         if self.state!=State::GameSetupProgress && self.state!=State::Empty {
-//             return false; // TODO - replace with error
-//         }
+    pub fn onInitPlayer(&mut self, player : Pubkey) -> Result<()> {
+        // TODO - accept SOL and make sure it matches correct
 
-//         let i : i8 = self.getPlayerIndex(player);
-//         self.players[i].init(i, player);
-//         self.n++;
-//         self.state = State::GameSetupProgress;
-//         if self.n==4 {
-//             State::GameSetupComplete;
-//         }
-//         return Ok(());
-//     }
+        let i = self.getPlayerIndex(&player)?;
+        self.players[i].init(i, player);
+        self.n += 1;
+        self.state = State::GameSetupProgress;
+        if self.n==4 {
+            State::GameSetupComplete;
+        }
+        return Ok(());
+    }
 
 //     pub fn startGame(&mut self) -> bool {
 //         if self.state != State::GameSetupComplete {
@@ -66,8 +62,10 @@ impl GameData {
 //         if self.state != State::PreRoll {
 //             return MoveResult::Error; // TODO - better error handling
 //         }
-//         let p = self.getPlayerIndex(player)
-//         if self.turn != p return false;
+//         let p = self.getPlayerIndex(&player)?;
+//         if self.turn != p {
+            // return false
+            // };
         
 //         // roll dice
 //         self.last_roll = 12;
@@ -94,15 +92,15 @@ impl GameData {
 //     }
 
 //     pub fn getPlayer(&self, p : Pubkey) -> Player {
-//         return self.players[self.getPlayerIndex(p)];
+//         return self.players[self.getPlayerIndex(p)?];
 //     }
 
-//     pub fn getProp(&self, ind : u8) -> Prop {
+//     pub fn getProp(&self, ind : usize) -> Prop {
 //         return self.props[ind];
 //     }
 
-//     pub fn buyProp(&mut self, player : Pubkey, pos : u8, payment : u32) -> bool {
-//         let p = self.getPlayerIndex(player);
+//     pub fn buyProp(&mut self, player : Pubkey, pos : usize, payment : u32) -> bool {
+//         let p = self.getPlayerIndex(&player)?;
 
 //         // enforce:
 //         if payment < self.players[p].balance {
@@ -132,8 +130,8 @@ impl GameData {
 //         return true;
 //     }
 
-//     pub fn firesaleProp(&mut self, player : Pubkey, pos : u8) -> bool {
-//         let p = self.getPlayerIndex(player);
+//     pub fn firesaleProp(&mut self, player : Pubkey, pos : usize) -> bool {
+//         let p = self.getPlayerIndex(&player)?;
 //         // enforce that player is owner of this pos
 //         if p != props[pos].ownerId {
 //             return false;
@@ -147,7 +145,7 @@ impl GameData {
 
 //     pub fn getLoan(&mut self, player : Pubkey, amt : u64) -> bool {
 //         // TODO - figure out how to accept Sol here
-//         let p = self.getPlayerIndex(player);
+//         let p = self.getPlayerIndex(&player)?;
 //         if players[p].termLeft > 0 {
 //             // already have loan
 //             return false;
@@ -161,7 +159,7 @@ impl GameData {
 //     }
 
 //     pub fn payLoan(&mut self, player : Pubkey, amt : u64) -> bool {
-//         let p = self.getPlayerIndex(player);
+//         let p = self.getPlayerIndex(&player)?;
 //         if players[p].balance < amt {
 //             return false; // too poor to pay back
 //         } else if players[p].loanAmt < amt {
@@ -173,12 +171,14 @@ impl GameData {
 //         return true;
 //     }
 
-//     priv self.getPlayerIndex(&self, &p : Pubkey) -> i8 {
-//         for i in 0..players.len() {
-//             if (players[i].acct == p) return i;
-//         }
-//         return -1;
-//     }
+    fn getPlayerIndex(&self, p : &Pubkey) -> Result<usize> {
+        for i in 0..self.players.len() {
+            if self.players[i].acct == *p {
+                return Ok(i);
+            }
+        }
+        return err!(GameErrorCode::PlayerIndexNotFound);
+    }
 // }
 }
 

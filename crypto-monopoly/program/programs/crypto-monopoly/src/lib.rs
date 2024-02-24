@@ -16,6 +16,7 @@ pub mod crypto_monopoly {
 
     pub fn init_game(ctx: Context<InitGame>, _level_seed: String) -> Result<()> {
         init_game::init_game(ctx);
+        return Ok(());
     }
 
     // This function lets the player chop a tree and get 1 wood. The session_auth_or macro

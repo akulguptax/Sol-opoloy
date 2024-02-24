@@ -6,4 +6,8 @@ pub enum GameErrorCode {
     NotEnoughEnergy,
     #[msg("Wrong Authority")]
     WrongAuthority,
+    #[msg("Game non-empty state")]
+    NonEmptyGameState,
+    #[msg("Player Index Not Found")]
+    PlayerIndexNotFound,
 }

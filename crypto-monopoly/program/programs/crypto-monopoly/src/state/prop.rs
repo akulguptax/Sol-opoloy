@@ -4,8 +4,8 @@ use anchor_lang::prelude::*;
 
 #[account]
 pub struct Prop {
-    pub id: u8,
-    pub price: u32,
+    pub id: i8,
+    pub price: u64,
     pub color: Colors,
     pub rent: u16,
     pub ownerId: i8,
@@ -22,7 +22,7 @@ impl Prop {
         self.rent = 0;
         self.ownerId = -1;
         self.hasMono = false;
-        self.name = "";
+        self.name = String::default();
         return Ok(());
     }
 

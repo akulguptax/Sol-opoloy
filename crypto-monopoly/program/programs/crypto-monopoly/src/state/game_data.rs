@@ -60,21 +60,21 @@ impl GameData {
 
     
 
-    // pub fn startTurn(&self, player : Pubkey) -> MoveResult {
+    // pub fn startTurn(&self, p : usize) -> MoveResult {
     //     // somehow map all these player Pubkeys to transaction sender
-    //     if self.state != State::PreRoll {
-    //         return MoveResult::Error; // TODO - better error handling
-    //     }
-    //     let p = self.getPlayerIndex(&player)?;
-    //     if self.turn != p {
-    //         return false
-    //         };
+    //     // if self.state != State::PreRoll {
+    //     //     return MoveResult::Error; // TODO - better error handling
+    //     // }
+    //     // let p = self.getPlayerIndex(&player)?;
+    //     // if self.turn != p {
+    //     //     return false
+    //     // };
         
     //     // roll dice
     //     self.last_roll = 12;
         
     //     // use dice to update move
-    //     let new_pos = self.players[p].move(roll);
+    //     let new_pos = self.players[p].makeMove(roll);
 
     //     // act on new position
     //     if self.props[new_pos].ownerId == p {
@@ -90,7 +90,7 @@ impl GameData {
     //     } else {
     //         // no one owns it, you have the option to buy it
     //         self.state = State::PostRoll;
-    //         return MoveResult::Buy;
+    //         return MoveResult::BuyOption;
     //     }
     // }
 
@@ -174,7 +174,7 @@ impl GameData {
 //         return true;
 //     }
 
-    fn getPlayerIndex(&self, p : &Pubkey) -> Result<usize> {
+    pub fn getPlayerIndex(&self, p : &Pubkey) -> Result<usize> {
         for i in 0..self.players.len() {
             if self.players[i].acct == *p {
                 return Ok(i);

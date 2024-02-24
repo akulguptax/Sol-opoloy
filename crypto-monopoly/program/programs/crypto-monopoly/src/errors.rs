@@ -10,4 +10,6 @@ pub enum GameErrorCode {
     NonEmptyGameState,
     #[msg("Player Index Not Found")]
     PlayerIndexNotFound,
+    #[msg("Not your turn")]
+    NotYourTurn,
 }

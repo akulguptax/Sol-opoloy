@@ -22,10 +22,11 @@ pub fn buy_prop(ctx: Context<BuyPropContext>, pos : u8, payment : u32) -> Result
     } else if pos != game_data.players[p as usize].pos {
         // pos is where the player is currently sitting
         return err!(GameErrorCode::WrongLocation);
-    } else if game_data.props[pos as usize].price != (payment as u32) {
-        // payment is right amount
-        return err!(GameErrorCode::InsufficientFunds);
-    }
+    } 
+    // else if game_data.props[pos as usize].price != (payment as u32) {
+    //     // payment is right amount
+    //     return err!(GameErrorCode::InsufficientFunds);
+    // }
 
     return Ok(ctx.accounts.game_data.buyProp(p, pos, payment)?);
 }

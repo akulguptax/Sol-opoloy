@@ -14,7 +14,7 @@ export const METAPLEX_READAPI = "https://devnet.helius-rpc.com/?api-key=78065db3
 export const GAME_DATA_SEED = "level_2";
 
 // CryptoMonopoly game program ID
-const programId = new PublicKey("3KGcThLuJfwZ2nfZMH9ZbYnUdDLDt3zNphxXMTaumugx")
+const programId = new PublicKey("tW9rCjQkuCFDS8pQqqnEe27P32k96f8Wt1mTpEF1chN")
 
 // Create the program interface using the idl, program ID, and provider
 export const program = new Program<CryptoMonopoly>(IDL, programId, {
@@ -27,14 +27,14 @@ export const [gameDataPDA] = PublicKey.findProgramAddressSync(
 )
 
 // Player Data Account Type from Idl
-export type PlayerData = IdlAccounts<CryptoMonopoly>["playerData"]
+// export type PlayerData = IdlAccounts<CryptoMonopoly>["playerData"]
 export type GameData = IdlAccounts<CryptoMonopoly>["gameData"]
 
 // Constants for the game
-export const TIME_TO_REFILL_ENERGY: BN = new BN(60)
-export const MAX_ENERGY = 100
-export const ENERGY_PER_TICK: BN = new BN(1)
-export const TOTAL_WOOD_AVAILABLE: BN = new BN(100000)
+// export const TIME_TO_REFILL_ENERGY: BN = new BN(60)
+// export const MAX_ENERGY = 100
+// export const ENERGY_PER_TICK: BN = new BN(1)
+// export const TOTAL_WOOD_AVAILABLE: BN = new BN(100000)
 
 export const INIT_BALANCE = 1000000; 
 export const PASS_GO = 200; // get 2/15 of starting each round

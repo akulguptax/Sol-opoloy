@@ -3,9 +3,6 @@ import { PublicKey } from "@solana/web3.js"
 import { useConnection, useWallet } from "@solana/wallet-adapter-react"
 import {
   program,
-  PlayerData,
-  MAX_ENERGY,
-  TIME_TO_REFILL_ENERGY,
   GameData,
   GAME_DATA_SEED,
 } from "@/utils/anchor"
@@ -41,11 +38,11 @@ export const GameStateProvider = ({
     if (!publicKey) {
       return;
     }
-    const [pda] = PublicKey.findProgramAddressSync(
-      [Buffer.from("player", "utf8"), publicKey.toBuffer()],
-      program.programId
-    );
-    setPlayerData(pda);
+    // const [pda] = PublicKey.findProgramAddressSync(
+    //   [Buffer.from("player", "utf8"), publicKey.toBuffer()],
+    //   program.programId
+    // );
+    // setPlayerData(pda);
     //   program.account.gameData
     //     .fetch(pda)
     //     .then((data) => {
@@ -67,10 +64,11 @@ export const GameStateProvider = ({
       [Buffer.from(GAME_DATA_SEED, "utf8")],
       program.programId
     );
-    setGameDataPDA(gameDataPDA);
+    setGameDataPDA(pda);
     program.account.gameData
       .fetch(pda)
       .then((data) => {
+        console.log(data);
         setGameData(data);
         setCurrentPlayer(data.turn);
       })

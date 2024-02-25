@@ -128,18 +128,18 @@ impl GameData {
     //         return true;
     //     }
 
-    //     pub fn payLoan(&mut self, player : Pubkey, amt : u32) -> bool {
-    //         let p = self.getPlayerIndex(&player)?;
-    //         if players[p].balance < amt {
-    //             return false; // too poor to pay back
-    //         } else if players[p].loanAmt < amt {
-    //             // trying to repay too much, let's trim it
-    //             amt = players[p].loanAmt;
-    //         }
-    //         players[p].balance -= amt;
-    //         players[p].loanAmt -= amt;
-    //         return true;
+    // pub fn payLoan(&mut self, player : Pubkey, amt : u32) -> bool {
+    //     let p = self.getPlayerIndex(&player)?;
+    //     if players[p].balance < amt {
+    //         return false; // too poor to pay back
+    //     } else if players[p].loanAmt < amt {
+    //         // trying to repay too much, let's trim it
+    //         amt = players[p].loanAmt;
     //     }
+    //     players[p].balance -= amt;
+    //     players[p].loanAmt -= amt;
+    //     return true;
+    // }
 
     // TODO - remove this once verifying this works
     pub fn getPlayerIndex(&self, p: &Pubkey) -> Result<u8> {
@@ -149,6 +149,16 @@ impl GameData {
             }
         }
         return err!(GameErrorCode::PlayerIndexNotFound);
+    }
+
+    fn eventLoop(&mut self) {
+        // for each player
+        for player in self.players.iter_mut() {
+            player.loanStep();
+        }
+        // increase interest due for everyone
+        // decrement termLeft
+        // liquidate if expired loan
     }
     // }
 }

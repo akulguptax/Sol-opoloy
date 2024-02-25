@@ -10,7 +10,7 @@ const RollDice = () => {
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const sessionWallet = useSessionWallet();
-  const { gameState, playerDataPDA } = useGameState();
+  const { gameData, playerDataPDA } = useGameState();
   const [isLoadingSession, setIsLoadingSession] = useState(false);
   const [isLoadingMainWallet, setIsLoadingMainWallet] = useState(false);
   const [transactionCounter, setTransactionCounter] = useState(0);
@@ -22,7 +22,7 @@ const RollDice = () => {
 
     try {
       // const transaction = await program.methods
-      //   .chopTree(GAME_DATA_SEED, transactionCounter)
+      //   .(GAME_DATA_SEED, transactionCounter)
       //   .accounts({
       //     player: playerDataPDA,
       //     gameData: gameDataPDA,

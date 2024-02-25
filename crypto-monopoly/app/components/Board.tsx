@@ -302,7 +302,7 @@ const Board: React.FC<BoardProps> = ({ players }) => {
           let positionProps = {};
           if (index < 11) {
             // Top row
-            console.log(index, square.name);
+
             positionProps = { colStart: index + 1, rowStart: 1 };
           } else if (index < 21) {
             // Right side

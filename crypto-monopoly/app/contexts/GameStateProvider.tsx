@@ -73,7 +73,8 @@ export const GameStateProvider = ({
         setCurrentPlayer(data.turn);
       })
       .catch((error) => {
-        window.alert("No game data found, please init!");
+        // window.alert("No game data found, please init!");
+        console.log(error)
       });
     connection.onAccountChange(pda, (account) => {
       const newGameData = program.coder.accounts.decode(
@@ -84,6 +85,7 @@ export const GameStateProvider = ({
       setCurrentPlayer(newGameData.turn);
     });
   }, [publicKey]);
+
   // useEffect(() => {
   //   const interval = setInterval(async () => {
   //     if (
@@ -107,6 +109,7 @@ export const GameStateProvider = ({
   //   }, 1000);
   //   return () => clearInterval(interval)
   // }, [playerState, timePassed, nextEnergyIn])
+  
   return (
     <GameStateContext.Provider
       value={{

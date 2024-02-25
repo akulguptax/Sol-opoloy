@@ -330,7 +330,7 @@ const Board: React.FC<BoardProps> = ({}) => {
                 color={square.color}
                 price={square.price}
                 details={square.details}
-                // add someway to highlight square if player index matches
+                position={index}
               />
             </GridItem>
           );

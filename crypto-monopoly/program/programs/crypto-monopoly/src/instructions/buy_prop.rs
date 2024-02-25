@@ -10,7 +10,7 @@ pub fn buy_prop(ctx: Context<BuyPropContext>, pos : u8, payment : u32) -> Result
     let p = game_data.getPlayerIndex(&ctx.accounts.signer.key())?;
     // let payment = ctx.accounts.myinfo.pay;
     // let pos = ctx.accounts.myinfo.pos;
-    if (payment as u32) < game_data.players[p as usize].balance {
+    if (payment as u32) > game_data.players[p as usize].balance {
         // enough funds
         return err!(GameErrorCode::InsufficientFunds);
     } else if game_data.turn != p {

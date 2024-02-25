@@ -8,11 +8,11 @@ import { GAME_DATA_SEED, gameDataPDA, program } from "@/utils/anchor";
 import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 
 type BuyButtonProps = {
-  playerId: number;
   propertyId: number;
+  cost: number; 
 };
 
-const BuyButton: React.FC<BuyButtonProps> = ({ playerId, propertyId }) => {
+const BuyButton: React.FC<BuyButtonProps> = ({ propertyId, cost }) => {
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const sessionWallet = useSessionWallet();
@@ -24,8 +24,10 @@ const BuyButton: React.FC<BuyButtonProps> = ({ playerId, propertyId }) => {
     if (!sessionWallet || !publicKey) return;
 
     try {
+      console.log(propertyId, cost);
+      
       const buyInstructions = await program.methods
-        .startTurn(GAME_DATA_SEED)
+        .buyProp(GAME_DATA_SEED, propertyId, cost)
         .accounts({
           gameData: gameDataPDA,
           signer: publicKey,

@@ -31,7 +31,7 @@ const PlayerModal: React.FC<PlayerModalProps> = ({
         <ModalHeader>{player.name}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <p>Name: {player?.playerId}</p>
+          <p>Player Id: {player?.playerId}</p>
           <p>Money: {player?.balance.toString()}</p>
           <p>Location: {boardData[player?.pos]?.name}</p>
           <p>Properties: </p>

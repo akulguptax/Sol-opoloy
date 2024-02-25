@@ -27,6 +27,9 @@ impl GameData {
         for prop in self.props.iter_mut() {
             prop.clear();
         }
+        for player in self.players.iter_mut() {
+            player.clear();
+        }
         self.state = State::PreRoll;
         return Ok(());
     }

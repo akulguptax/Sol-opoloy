@@ -32,21 +32,21 @@ const PlayerModal: React.FC<PlayerModalProps> = ({
   const [playerProps, setPlayerProps] = useState([]);
 
   useEffect(() => {
-    // const findProps = (playerId: number, gameData: any) => {
-    //   const matches = gameData.props.reduce(
-    //     (acc: any, prop: any, index: number) => {
-    //       if (prop.ownerId === playerId) {
-    //         acc.push(index);
-    //       }
-    //       return acc;
-    //     },
-    //     []
-    //   );
+    const findProps = (playerId: number, gameData: any) => {
+      const matches = gameData.props.reduce(
+        (acc: any, prop: any, index: number) => {
+          if (prop.ownerId === playerId) {
+            acc.push(index);
+          }
+          return acc;
+        },
+        []
+      );
 
-    //   setPlayerProps(matches);
-    // };
+      setPlayerProps(matches);
+    };
 
-    // findProps(player.playerId, gameData);
+    findProps(player.playerId, gameData);
   }, [player.playerId, gameData]);
 
   console.log(playerProps);
@@ -59,25 +59,48 @@ const PlayerModal: React.FC<PlayerModalProps> = ({
         <ModalHeader>{player.name}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <p>Player Id: {player?.playerId}</p>
-          <p>Money: {player?.balance.toString()}</p>
-          <p>Location: {boardData[player?.pos]?.name}</p>
-          <p>Properties: </p>
-          <SimpleGrid columns={2} spacing={4}>
-            {playerProps.map((prop: any, index) => (
-              <Box
-                key={index}
-                p="5"
-                shadow="md"
-                borderWidth="1px"
-                backgroundColor={boardData[prop.index]?.color}
-              >
-                <Text color="black" fontSize="sm">
-                  {boardData[prop.id]?.name}
-                </Text>
-              </Box>
-            ))}
-          </SimpleGrid>
+          <div
+            style={{
+              padding: "20px",
+              backgroundColor: "#f0f0f0",
+              borderRadius: "10px",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+            }}
+          >
+            <h3 style={{ color: "#333" }}>Player Information</h3>
+            <ul style={{ listStyle: "none", padding: 0 }}>
+              <li>
+                <strong>Player Id:</strong> {player?.playerId ?? "N/A"}
+              </li>
+              <li>
+                <strong>Money:</strong> ${player?.balance?.toString() ?? "N/A"}
+              </li>
+              <li>
+                <strong>Location:</strong>{" "}
+                {boardData[player?.pos]?.name ?? "N/A"}
+              </li>
+              <li>
+                <strong>Properties:</strong>
+                <br />
+              </li>
+            </ul>
+
+            <SimpleGrid columns={2} spacing={4}>
+              {playerProps.map((prop: any, index) => (
+                <Box
+                  key={index}
+                  p="3"
+                  shadow="md"
+                  borderWidth="1px"
+                  backgroundColor={boardData[prop]?.color}
+                >
+                  <Text color="black" fontSize="sm">
+                    {boardData[prop]?.name}
+                  </Text>
+                </Box>
+              ))}
+            </SimpleGrid>
+          </div>
         </ModalBody>
         <ModalFooter>
           <Button colorScheme="blue" mr={3} onClick={onClose}>

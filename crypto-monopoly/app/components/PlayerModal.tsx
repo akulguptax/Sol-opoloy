@@ -14,7 +14,7 @@ import { Player } from "./PlayerTable";
 import { boardData } from "./Board";
 
 interface PlayerModalProps {
-  player: Player;
+  player: any;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -31,9 +31,9 @@ const PlayerModal: React.FC<PlayerModalProps> = ({
         <ModalHeader>{player.name}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <p>Name: {player.name}</p>
-          <p>Money: {player.money}</p>
-          <p>Location: {boardData[player.location].name}</p>
+          <p>Name: {player?.playerId}</p>
+          <p>Money: {player?.balance.toString()}</p>
+          <p>Location: {boardData[player?.pos]?.name}</p>
           <p>Properties: </p>
         </ModalBody>
         <ModalFooter>

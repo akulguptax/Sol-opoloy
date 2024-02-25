@@ -69,6 +69,7 @@ export const GameStateProvider = ({
     program.account.gameData
       .fetch(pda)
       .then((data) => {
+        console.log(data); 
         setGameData(data);
         setCurrentPlayer(data.turn);
       })

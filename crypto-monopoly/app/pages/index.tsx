@@ -40,7 +40,10 @@ export default function Home() {
       <VStack>
         <Image src="/logo.png" alt="Logo" width={256} height={256} />
         <Heading>Crypto-Monopoly</Heading>
-        <InitPlayerButton />
+        <HStack>
+          <InitPlayerButton />
+          <RollDice />
+        </HStack>
         {!publicKey ? (
           <Text>Connect to devnet wallet!</Text>
         ) : (

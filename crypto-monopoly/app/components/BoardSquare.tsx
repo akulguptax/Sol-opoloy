@@ -73,7 +73,7 @@ const BoardSquare: React.FC<BoardSquareProps> = ({
             </VStack>
           </ModalBody>
           <ModalFooter backgroundColor="gray.100" borderBottomRadius="lg">
-            <BuyButton playerId={5} propertyId={5}></BuyButton>
+            <BuyButton playerId={5} propertyId={5}/>
             <SellButton playerId={5} propertyId={5}  />
             <Button colorScheme={color} color="black" onClick={onClose}>
               Close

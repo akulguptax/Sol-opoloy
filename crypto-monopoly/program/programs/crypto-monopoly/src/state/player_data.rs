@@ -17,7 +17,7 @@ pub struct Player {
 
 impl Player {
     pub fn clear(&mut self) -> Result<()> {
-        self.playerId = 5;
+        self.playerId = END_PLAYERS;
         self.acct = Pubkey::default();
         self.balance = 0;
         self.loanAmt = 0;

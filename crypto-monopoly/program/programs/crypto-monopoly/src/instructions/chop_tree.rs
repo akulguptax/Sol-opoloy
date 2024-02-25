@@ -4,7 +4,7 @@
 // use anchor_lang::prelude::*;
 // use session_keys::{Session, SessionToken};
 
-// pub fn chop_tree(mut ctx: Context<ChopTree>, counter: u16, amount: u64) -> Result<()> {
+// pub fn chop_tree(mut ctx: Context<ChopTree>, counter: u16, amount: u32) -> Result<()> {
 //     let account: &mut &mut ChopTree<'_> = &mut ctx.accounts;
 //     account.player.update_energy()?;
 //     account.player.print()?;

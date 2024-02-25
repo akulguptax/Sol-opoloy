@@ -6,8 +6,8 @@ use anchor_lang::prelude::*;
 pub struct Player {
     pub playerId: u8,
     pub acct: Pubkey,
-    pub balance: u64,
-    pub loanAmt: u64,
+    pub balance: u32,
+    pub loanAmt: u32,
     pub ir: f64,
     pub termLeft: u8,
     pub pos: u8,
@@ -85,7 +85,7 @@ impl Player {
 //         Ok(())
 //     }
 
-//     pub fn chop_tree(&mut self, amount: u64) -> Result<()> {
+//     pub fn chop_tree(&mut self, amount: u32) -> Result<()> {
 //         match self.wood.checked_add(amount) {
 //             Some(v) => {
 //                 self.wood = v;

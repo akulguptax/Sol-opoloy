@@ -24,7 +24,7 @@ pub struct InitGame<'info> {
     #[account(
         init_if_needed,
         payer = signer,
-        space = 10000, // 8 + 8 for anchor account discriminator and the u64. Using 1000 to have space to expand easily.
+        space = 10000, // 8 + 8 for anchor account discriminator and the u32. Using 1000 to have space to expand easily.
         seeds = [level_seed.as_ref()],
         bump,
     )]

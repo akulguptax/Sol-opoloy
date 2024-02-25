@@ -12,8 +12,8 @@ pub struct GameData {
     pub buyin : u32,
     pub turn: u8,
     // pub state: State,
-    pub props: [Prop; 28],
-    pub players: [Player; 4],
+    pub props: [Prop; END_PROPS as usize],
+    pub players: [Player; END_PLAYERS as usize],
     pub n : u8,
     pub last_roll : u8,
 }
@@ -73,7 +73,7 @@ impl GameData {
             return MoveResult::Noop;
         } else if self.props[new_pos as usize].ownerId < END_PLAYERS {
             // someone else owns this, pay rent!!
-            let paid : u64 = self.props[new_pos as usize].rent.try_into().unwrap();
+            let paid : u32 = self.props[new_pos as usize].rent.try_into().unwrap();
             self.players[p as usize].balance -= paid;
             self.players[self.props[new_pos as usize].ownerId as usize].balance += paid;
             self.turn = (self.turn + 1)%self.n;
@@ -115,7 +115,7 @@ impl GameData {
 
         // change
         //      player balance
-        self.players[p as usize].balance -= payment as u64;
+        self.players[p as usize].balance -= payment as u32;
 
         //      property owner
         self.props[pos as usize].bought(p);
@@ -136,7 +136,7 @@ impl GameData {
     //     players[p].balance += props[pos].price;
     // }
 
-//     pub fn getLoan(&mut self, player : Pubkey, amt : u64) -> bool {
+//     pub fn getLoan(&mut self, player : Pubkey, amt : u32) -> bool {
 //         // TODO - figure out how to accept Sol here
 //         let p = self.getPlayerIndex(&player)?;
 //         if players[p].termLeft > 0 {
@@ -151,7 +151,7 @@ impl GameData {
 //         return true;
 //     }
 
-//     pub fn payLoan(&mut self, player : Pubkey, amt : u64) -> bool {
+//     pub fn payLoan(&mut self, player : Pubkey, amt : u32) -> bool {
 //         let p = self.getPlayerIndex(&player)?;
 //         if players[p].balance < amt {
 //             return false; // too poor to pay back
@@ -176,11 +176,11 @@ impl GameData {
 }
 
 // pub struct GameData {
-//     pub total_wood_collected: u64,
+//     pub total_wood_collected: u32,
 // }
 
 // impl GameData {
-//     pub fn on_tree_chopped(&mut self, amount_chopped: u64) -> Result<()> {
+//     pub fn on_tree_chopped(&mut self, amount_chopped: u32) -> Result<()> {
 //         match self.total_wood_collected.checked_add(amount_chopped) {
 //             Some(v) => {
 //                 if self.total_wood_collected >= MAX_WOOD_PER_TREE {

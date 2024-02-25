@@ -10,7 +10,7 @@ pub fn buy_prop(ctx: Context<BuyPropContext>) -> Result<()> {
     let p = game_data.getPlayerIndex(&ctx.accounts.signer.key())?;
     let payment = ctx.accounts.myinfo.pay;
     let pos = ctx.accounts.myinfo.pos;
-    if (payment as u64) < game_data.players[p as usize].balance {
+    if (payment as u32) < game_data.players[p as usize].balance {
         // enough funds
         return err!(GameErrorCode::InsufficientFunds);
     } else if game_data.turn != p {
@@ -22,7 +22,7 @@ pub fn buy_prop(ctx: Context<BuyPropContext>) -> Result<()> {
     } else if pos != game_data.players[p as usize].pos {
         // pos is where the player is currently sitting
         return err!(GameErrorCode::WrongLocation);
-    } else if game_data.props[pos as usize].price != (payment as u64) {
+    } else if game_data.props[pos as usize].price != (payment as u32) {
         // payment is right amount
         return err!(GameErrorCode::InsufficientFunds);
     }
@@ -42,7 +42,7 @@ pub struct BuyPropContext<'info> {
     #[account(
         init_if_needed,
         payer = signer,
-        space = 10000, // 8 + 8 for anchor account discriminator and the u64. Using 1000 to have space to expand easily.
+        space = 10000, // 8 + 8 for anchor account discriminator and the u32. Using 1000 to have space to expand easily.
         seeds = [level_seed.as_ref()],
         bump,
     )]

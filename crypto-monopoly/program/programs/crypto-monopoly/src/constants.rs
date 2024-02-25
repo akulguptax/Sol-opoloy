@@ -16,7 +16,7 @@ pub const END_PROPS : u8 = 50;
 pub const END_PLAYERS : u8 = 5;
 
 
-#[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq)]
+#[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq, Copy)]
 pub enum Colors {
     None,
     Brown,
@@ -29,7 +29,7 @@ pub enum Colors {
     Blue
 }
 
-#[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq)]
+#[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq, Copy)]
 pub enum State {
     Empty,
     GameSetupProgress,
@@ -39,7 +39,7 @@ pub enum State {
     AfterGame
 }
 
-#[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq)]
+#[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq, Copy)]
 pub enum MoveResult {
     Noop,
     Rent,

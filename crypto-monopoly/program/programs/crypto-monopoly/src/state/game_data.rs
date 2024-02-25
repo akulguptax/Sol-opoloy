@@ -7,12 +7,13 @@ use crate::state::player_data::Player;
 
 
 #[account]
+#[derive(Copy)]
 pub struct GameData {
     buyin : u32,
     pub turn: u8,
     pub state: State,
-    props: [Prop; 28],
-    players: [Player; 4],
+    pub props: [Prop; 28],
+    pub players: [Player; 4],
     n : u8,
     last_roll : u8,
 }
@@ -88,40 +89,39 @@ impl GameData {
         return Ok(self.players[self.getPlayerIndex(p)? as usize]);
     }
 
-    // pub fn getProp(&self, ind : u8) -> Prop {
-    //     return self.props[ind];
-    // }
+    pub fn getProp(&self, ind : u8) -> Result<Prop> {
+        return Ok(self.props[ind as usize]);
+    }
 
-    // pub fn buyProp(&mut self, player : Pubkey, pos : u8, payment : u32) -> bool {
-    //     let p = self.getPlayerIndex(&player)?;
+    pub fn buyProp(&mut self, p : u8, pos : u8, payment : u32) -> Result<()> {
 
-    //     // enforce:
-    //     if payment < self.players[p].balance {
-    //         // enough funds
-    //         return false;
-    //     } else if self.turn != p {
-    //         // player turn
-    //         return false;
-    //     } else if self.state != State::PostRoll {
-    //         // player in correct state
-    //         return false;
-    //     } else if pos != self.players[p].pos {
-    //         // pos is where the player is currently sitting
-    //         return false;
-    //     } else if self.props[pos].price != payment {
-    //         // payment is right amount
-    //         return false;
-    //     }
+        // // enforce:
+        // if payment < self.players[p].balance {
+        //     // enough funds
+        //     return false;
+        // } else if self.turn != p {
+        //     // player turn
+        //     return false;
+        // } else if self.state != State::PostRoll {
+        //     // player in correct state
+        //     return false;
+        // } else if pos != self.players[p].pos {
+        //     // pos is where the player is currently sitting
+        //     return false;
+        // } else if self.props[pos].price != payment {
+        //     // payment is right amount
+        //     return false;
+        // }
 
-    //     // change
-    //     //      player balance
-    //     players[p].balance -= payment;
+        // change
+        //      player balance
+        self.players[p as usize].balance -= payment as u64;
 
-    //     //      property owner
-    //     props[pos].bought(p);
+        //      property owner
+        self.props[pos as usize].bought(p);
 
-    //     return true;
-    // }
+        return Ok(());
+    }
 
     // pub fn firesaleProp(&mut self, player : Pubkey, pos : u8) -> bool {
     //     let p = self.getPlayerIndex(&player)?;

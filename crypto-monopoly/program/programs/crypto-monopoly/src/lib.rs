@@ -9,7 +9,7 @@ pub use crate::state::player_data::Player;
 use instructions::*;
 use crate::constants::*;
 
-declare_id!("3KGcThLuJfwZ2nfZMH9ZbYnUdDLDt3zNphxXMTaumugx");
+declare_id!("tW9rCjQkuCFDS8pQqqnEe27P32k96f8Wt1mTpEF1chN");
 
 #[program]
 pub mod crypto_monopoly {
@@ -40,6 +40,10 @@ pub mod crypto_monopoly {
 
     pub fn get_player(ctx: Context<WhoseTurn>, _level_seed: String) -> Result<Player> {
         return Ok(get_player::get_player(ctx)?);
+    }
+
+    pub fn buy_prop(ctx: Context<BuyPropContext>, _level_seed: String) -> Result<()> {
+        return Ok(buy_prop::buy_prop(ctx)?);
     }
 
     // This function lets the player chop a tree and get 1 wood. The session_auth_or macro

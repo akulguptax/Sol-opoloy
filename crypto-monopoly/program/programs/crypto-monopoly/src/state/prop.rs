@@ -2,7 +2,7 @@ use crate::constants::*;
 use anchor_lang::prelude::*;
 
 
-#[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq)]
+#[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq, Copy)]
 pub struct Prop {
     pub id: u8,
     pub price: u64,

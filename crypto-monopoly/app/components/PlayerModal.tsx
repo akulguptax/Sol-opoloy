@@ -10,8 +10,10 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-import { Player } from "./PlayerTable";
 import { boardData } from "./Board";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useGameState } from "@/contexts/GameStateProvider";
+
 
 interface PlayerModalProps {
   player: any;
@@ -24,6 +26,20 @@ const PlayerModal: React.FC<PlayerModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const { gameData, playerDataPDA } = useGameState();
+
+  const findProps = (playerId: number, gameData: any) => {
+    const matches = [];
+    for (const prop of gameData.props) {
+      if (prop.ownerId === playerId) {
+        matches.push(prop);
+      }
+    }
+    return matches;
+  };
+
+  findProps(player?.playerId, gameData);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />

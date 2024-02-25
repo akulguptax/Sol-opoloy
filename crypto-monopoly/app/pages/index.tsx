@@ -28,9 +28,11 @@ export default function Home() {
       </Flex>
       <VStack>
         <Image src="/logo.png" alt="Logo" width={256} height={256} />
-        <Heading>Crypto-Monopoly</Heading>
+        <br />
+        <Heading>Sol-opoly</Heading>
+        <br />
         <HStack>
-          <CreateGameButton/>
+          <CreateGameButton />
           <InitPlayerButton />
           <RollDice />
         </HStack>
@@ -39,7 +41,12 @@ export default function Home() {
         ) : (
           <>
             <PlayerTable />
+            <br />
             <Board />
+            <br />
+            <br />
+            <br />
+            <br />
           </>
         )}
       </VStack>

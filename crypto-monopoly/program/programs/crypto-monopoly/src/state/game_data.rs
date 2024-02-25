@@ -55,9 +55,9 @@ impl GameData {
         return self.last_roll.try_into().unwrap();
     }
 
-    pub fn startTurn(&mut self, p: u8) -> MoveResult {
+    pub fn startTurn(&mut self, p: u8, roll: u8) -> MoveResult {
         // roll dice
-        self.last_roll = 12;
+        self.last_roll = roll;
 
         // use dice to update move
         let new_pos = self.players[p as usize].makeMove(self.last_roll as u8);

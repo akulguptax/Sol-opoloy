@@ -44,7 +44,7 @@ const players = [
 const PlayerTable: React.FC = () => {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { gameData, playerDataPDA } = useGameState();
+  const { gameData, playerDataPDA, currentPlayer } = useGameState();
 
   const handlePlayerClick = (player: any) => {
     setSelectedPlayer(player);
@@ -63,30 +63,44 @@ const PlayerTable: React.FC = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {gameData?.players.map((player, index) => (
-            <Tr key={index}>
-              <Td>
-                <Text fontSize="sm">{player?.playerId}</Text>
-              </Td>
-              <Td isNumeric>
-                <Text fontSize="sm">${player?.balance.toString()}</Text>
-              </Td>
-              <Td>
-                <Text fontSize="sm">{boardData[player?.pos]?.name}</Text>
-              </Td>
-              <Td textAlign="center">
-                <Tooltip label="View Details">
-                  <Button
-                    size="xs"
-                    onClick={() => handlePlayerClick(player)}
-                    variant="ghost"
+          {gameData?.players
+            .filter((player) => player.playerId !== 4)
+            .map((player, index) => (
+              <Tr key={index}>
+                <Td>
+                  <Text
+                    fontSize="sm"
+                    // style={{
+                    //   fontWeight:
+                    //     currentPlayer === player.playerId ? "bold" : "normal",
+                    //   color:
+                    //     currentPlayer === player.playerId
+                    //       ? "purple"
+                    //       : "initial",
+                    // }}
                   >
-                    🔍 View Details
-                  </Button>
-                </Tooltip>
-              </Td>
-            </Tr>
-          ))}
+                    {player?.playerId}
+                  </Text>
+                </Td>
+                <Td isNumeric>
+                  <Text fontSize="sm">${player?.balance.toString()}</Text>
+                </Td>
+                <Td>
+                  <Text fontSize="sm">{boardData[player?.pos]?.name}</Text>
+                </Td>
+                <Td textAlign="center">
+                  <Tooltip label="View Details">
+                    <Button
+                      size="xs"
+                      onClick={() => handlePlayerClick(player)}
+                      variant="ghost"
+                    >
+                      🔍 View Details
+                    </Button>
+                  </Tooltip>
+                </Td>
+              </Tr>
+            ))}
         </Tbody>
       </Table>
       {selectedPlayer && (

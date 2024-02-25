@@ -6,6 +6,7 @@ import { useSessionWallet } from "@magicblock-labs/gum-react-sdk";
 import { useGameState } from "@/contexts/GameStateProvider";
 import { GAME_DATA_SEED, gameDataPDA, program } from "@/utils/anchor";
 import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
+import { randomInt } from "crypto";
 
 const RollDice = () => {
   const { publicKey, sendTransaction } = useWallet();
@@ -17,12 +18,14 @@ const RollDice = () => {
   // const [transactionCounter, setTransactionCounter] = useState(0);
 
   const onRollClick = useCallback(async () => {
+    const roll1 = Math.floor(Math.random() * 6) + 1;
+    const roll2 = Math.floor(Math.random() * 6) + 1;
     setIsLoadingSession(true);
     if (!sessionWallet || !publicKey) return;
 
     try {
       const rollInstructions = await program.methods
-        .startTurn(GAME_DATA_SEED)
+        .startTurn(GAME_DATA_SEED, roll1 + roll2)
         .accounts({
           gameData: gameDataPDA,
           signer: publicKey,

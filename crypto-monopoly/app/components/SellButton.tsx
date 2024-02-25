@@ -8,11 +8,10 @@ import { GAME_DATA_SEED, gameDataPDA, program } from "@/utils/anchor";
 import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 
 type SellButtonProps = {
-  playerId: number;
   propertyId: number;
 };
 
-const SellButton: React.FC<SellButtonProps> = ({ playerId, propertyId }) => {
+const SellButton: React.FC<SellButtonProps> = ({ propertyId }) => {
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const sessionWallet = useSessionWallet();
@@ -24,9 +23,8 @@ const SellButton: React.FC<SellButtonProps> = ({ playerId, propertyId }) => {
     if (!sessionWallet || !publicKey) return;
 
     try {
-      
-      const buyInstructions = await program.methods
-        .startTurn(GAME_DATA_SEED)
+      const sellinstructions = await program.methods
+        .sellProp(GAME_DATA_SEED, propertyId)
         .accounts({
           gameData: gameDataPDA,
           signer: publicKey,
@@ -34,7 +32,7 @@ const SellButton: React.FC<SellButtonProps> = ({ playerId, propertyId }) => {
         })
         .instruction();
 
-      const transaction = new Transaction().add(buyInstructions);
+      const transaction = new Transaction().add(sellinstructions);
 
       const txSig = await sendTransaction(transaction, connection, {
         skipPreflight: true,

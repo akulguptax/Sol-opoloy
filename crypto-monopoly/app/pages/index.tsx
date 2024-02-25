@@ -16,6 +16,7 @@ import RollDice from "@/components/RollDice";
 import Image from "next/image";
 import PlayerTable from "@/components/PlayerTable";
 import CreateGameButton from "@/components/CreateGameButton";
+import GetLoanButton from "@/components/GetLoanButton";
 
 export default function Home() {
   const { publicKey } = useWallet();
@@ -31,11 +32,16 @@ export default function Home() {
         <br />
         <Heading>Sol-opoly</Heading>
         <br />
-        <HStack>
-          <CreateGameButton />
-          <InitPlayerButton />
-          <RollDice />
-        </HStack>
+        <VStack>
+          <HStack>
+            <CreateGameButton />
+            <InitPlayerButton />
+            <RollDice />
+          </HStack>
+          <br />
+          <GetLoanButton />
+        </VStack>
+        <br />
         {!publicKey ? (
           <Text>Connect to devnet wallet!</Text>
         ) : (

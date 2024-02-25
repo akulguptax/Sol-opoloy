@@ -81,7 +81,7 @@ const PlayerModal: React.FC<PlayerModalProps> = ({
               </li>
               <li>
                 <strong>Properties:</strong>
-                <br />
+                <br/>
               </li>
             </ul>
 

@@ -13,6 +13,7 @@ import {
   Button,
   Text,
   VStack,
+  HStack,
 } from "@chakra-ui/react";
 import BuyButton from "./BuyButton";
 import SellButton from "./SellButton";
@@ -90,10 +91,15 @@ const BoardSquare: React.FC<BoardSquareProps> = ({
             </VStack>
           </ModalBody>
           <ModalFooter backgroundColor="gray.100" borderBottomRadius="lg">
-            {type === "property" && (
-              <BuyButton cost={price} propertyId={position} />
+            {(type === "property" ||
+              type === "utility" ||
+              type === "railroad") && (
+              <HStack>
+                <BuyButton cost={price} propertyId={position} />
+                <SellButton propertyId={position} />
+              </HStack>
             )}
-            {/* <SellButton cost={price} propertyId={5}  /> */}
+
             <Button colorScheme={color} color="black" onClick={onClose}>
               Close
             </Button>

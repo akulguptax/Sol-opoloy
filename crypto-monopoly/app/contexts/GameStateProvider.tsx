@@ -71,7 +71,15 @@ export const GameStateProvider = ({
       .then((data) => {
         console.log(data); 
         setGameData(data);
-        setCurrentPlayer(data.turn);
+
+        const matchingPlayer = data.players.find(
+          (player) => player.acct === publicKey
+        );
+
+        if (matchingPlayer) {
+          setCurrentPlayer(matchingPlayer.playerId);
+        } 
+        
       })
       .catch((error) => {
         // window.alert("No game data found, please init!");

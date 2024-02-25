@@ -203,6 +203,36 @@ export type CryptoMonopoly = {
           "type": "u32"
         }
       ]
+    },
+    {
+      "name": "getLoan",
+      "accounts": [
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        },
+        {
+          "name": "amt",
+          "type": "u32"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -226,7 +256,7 @@ export type CryptoMonopoly = {
                 {
                   "defined": "Prop"
                 },
-                40
+                20
               ]
             }
           },
@@ -276,10 +306,6 @@ export type CryptoMonopoly = {
             "type": "u32"
           },
           {
-            "name": "ir",
-            "type": "f64"
-          },
-          {
             "name": "termLeft",
             "type": "u8"
           },
@@ -289,7 +315,7 @@ export type CryptoMonopoly = {
           },
           {
             "name": "solOwed",
-            "type": "i64"
+            "type": "u32"
           }
         ]
       }
@@ -422,6 +448,16 @@ export type CryptoMonopoly = {
       "code": 6004,
       "name": "WrongLocation",
       "msg": "Wrong Location"
+    },
+    {
+      "code": 6005,
+      "name": "AlreadyBorrowing",
+      "msg": "Already have a loan"
+    },
+    {
+      "code": 6006,
+      "name": "OverLevered",
+      "msg": "Over-levered"
     }
   ]
 };
@@ -631,6 +667,36 @@ export const IDL: CryptoMonopoly = {
           "type": "u32"
         }
       ]
+    },
+    {
+      "name": "getLoan",
+      "accounts": [
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        },
+        {
+          "name": "amt",
+          "type": "u32"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -654,7 +720,7 @@ export const IDL: CryptoMonopoly = {
                 {
                   "defined": "Prop"
                 },
-                40
+                20
               ]
             }
           },
@@ -704,10 +770,6 @@ export const IDL: CryptoMonopoly = {
             "type": "u32"
           },
           {
-            "name": "ir",
-            "type": "f64"
-          },
-          {
             "name": "termLeft",
             "type": "u8"
           },
@@ -717,7 +779,7 @@ export const IDL: CryptoMonopoly = {
           },
           {
             "name": "solOwed",
-            "type": "i64"
+            "type": "u32"
           }
         ]
       }
@@ -850,6 +912,16 @@ export const IDL: CryptoMonopoly = {
       "code": 6004,
       "name": "WrongLocation",
       "msg": "Wrong Location"
+    },
+    {
+      "code": 6005,
+      "name": "AlreadyBorrowing",
+      "msg": "Already have a loan"
+    },
+    {
+      "code": 6006,
+      "name": "OverLevered",
+      "msg": "Over-levered"
     }
   ]
 };

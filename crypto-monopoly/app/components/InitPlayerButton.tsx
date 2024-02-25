@@ -19,22 +19,6 @@ const InitPlayerButton = () => {
     try {
       console.log("Joined Gamed");
 
-      const initGameInstruction = await program.methods
-        .initGame(GAME_DATA_SEED, 1)
-        .accounts({
-          gameData: gameDataPDA,
-          signer: publicKey,
-          systemProgram: SystemProgram.programId,
-        })
-        .instruction();
-
-      // Create a transfer transaction to take X SOL from the user
-      const transferInstruction = SystemProgram.transfer({
-        fromPubkey: publicKey,
-        toPubkey: new PublicKey("88jYUb1TymHUT5Mv8AB9cqmVt53KqsqGZqGga2uYRJjn"), // game's treasury account public key
-        lamports: joinGameAmount, // gameData?.buyin * 1_000_000_000,
-      });
-
       const initPlayerInstruction = await program.methods
         .initPlayer(GAME_DATA_SEED)
         .accounts({
@@ -44,26 +28,11 @@ const InitPlayerButton = () => {
         })
         .instruction();
 
-      // Combine the transfer and initPlayer instructions into a single transaction
-      const transaction = new Transaction().add(
-        initGameInstruction,
-        transferInstruction
-      );
+      const transaction = new Transaction().add(initPlayerInstruction);
+
       const txSig = await sendTransaction(transaction, connection, {
         skipPreflight: true,
       });
-      console.log("Transactions");
-      console.log(txSig);
-      console.log(gameData);
-      const transaction1 = new Transaction().add(
-        initPlayerInstruction
-      );
-      const txSig1 = await sendTransaction(transaction1, connection, {
-        skipPreflight: true,
-      });
-      console.log("second is:")
-      console.log(gameData);
-      console.log(txSig1);
 
       console.log(`https://explorer.solana.com/tx/${txSig}?cluster=devnet`);
     } catch (error) {

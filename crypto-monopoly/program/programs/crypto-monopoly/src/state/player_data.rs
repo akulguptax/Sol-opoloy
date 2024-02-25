@@ -47,6 +47,7 @@ impl Player {
         self.solOwed += (self.loanAmt >> DEFAULT_IR) as i32;
         if self.termLeft == 1 {
             self.balance -= self.loanAmt as u32; 
+            self.loanAmt = 0;
         }
         if self.termLeft > 0 {
             self.termLeft -= 1;

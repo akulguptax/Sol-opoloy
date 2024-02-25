@@ -5,9 +5,9 @@ use crate::errors::*;
 use anchor_lang::prelude::*;
 
 pub fn init_game(ctx: Context<InitGame>, data : u32) -> Result<()> {
-    if ctx.accounts.game_data.state != State::Empty {
-        return err!(GameErrorCode::NonEmptyGameState);
-    } 
+    // if ctx.accounts.game_data.state != State::Empty {
+    //     return err!(GameErrorCode::NonEmptyGameState);
+    // } 
     ctx.accounts.game_data.onInitGame( data);
     return Ok(());
 }

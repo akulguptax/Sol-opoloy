@@ -22,7 +22,7 @@ export const boardData = [
   {
     name: "Serum Chest",
     type: "chest",
-    color: "lightbrown",
+    color: "#faf9f6",
     price: 0,
     details: "Decentralized exchange framework for Solana, fortunes vary.",
   },
@@ -37,7 +37,7 @@ export const boardData = [
   {
     name: "SolTax",
     type: "tax",
-    color: "none",
+    color: "#faf9f6",
     price: 200,
     details: "Contribute to the network fee or stake a percentage of your SOL.",
   },
@@ -60,7 +60,7 @@ export const boardData = [
   {
     name: "Solana Chance",
     type: "chance",
-    color: "none",
+    color: "#faf9f6",
     price: 0,
     details: "Opportunities within the Solana ecosystem, outcomes will vary.",
   },
@@ -81,7 +81,7 @@ export const boardData = [
   {
     name: "Solana Jail",
     type: "corner",
-    color: "none",
+    color: "#faf9f6",
     price: 0,
     details:
       "Network congestion or validator downtime, temporarily out of action.",
@@ -96,7 +96,7 @@ export const boardData = [
   {
     name: "Solana Power Company",
     type: "utility",
-    color: "none",
+    color: "#faf9f6",
     price: 150,
     details: "Staking SOL to secure the network and earn rewards.",
   },
@@ -133,7 +133,7 @@ export const boardData = [
   {
     name: "Serum Community Chest",
     type: "chest",
-    color: "none",
+    color: "#faf9f6",
     price: 0,
     details: "Gains from decentralized finance on Solana, outcome varies.",
   },
@@ -156,7 +156,7 @@ export const boardData = [
   {
     name: "Free Parking",
     type: "corner",
-    color: "none",
+    color: "#faf9f6",
     price: 0,
     details: "A break from transaction fees, no benefits or penalties.",
   },
@@ -170,7 +170,7 @@ export const boardData = [
   {
     name: "Solana Chance",
     type: "chance",
-    color: "none",
+    color: "#faf9f6",
     price: 0,
     details: "A twist of fate in the Solana ecosystem, fortunes can change.",
   },
@@ -212,7 +212,7 @@ export const boardData = [
   {
     name: "Helium Water (Net)Works",
     type: "utility",
-    color: "none",
+    color: "#faf9f6",
     price: 150,
     details: "Helium - decentralized internet connectivity and freedom.",
   },
@@ -226,7 +226,7 @@ export const boardData = [
   {
     name: "Go To Solana Jail",
     type: "corner",
-    color: "none",
+    color: "#faf9f6",
     price: 0,
     details: "Smart contract failure or security breach, immediate downtime.",
   },
@@ -247,7 +247,7 @@ export const boardData = [
   {
     name: "Serum Community Chest",
     type: "chest",
-    color: "none",
+    color: "#faf9f6",
     price: 0,
     details: "Unexpected DeFi opportunities or challenges on Solana.",
   },
@@ -268,7 +268,7 @@ export const boardData = [
   {
     name: "Solana Chance",
     type: "chance",
-    color: "none",
+    color: "#faf9f6",
     price: 0,
     details:
       "One last opportunity for a pivotal moment in the Solana ecosystem.",
@@ -283,7 +283,7 @@ export const boardData = [
   {
     name: "Luxury Sol Tax",
     type: "tax",
-    color: "none",
+    color: "#faf9f6",
     price: 100,
     details:
       "High transaction volumes or NFT trades can incur additional fees.",

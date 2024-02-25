@@ -57,7 +57,7 @@ const BoardSquare: React.FC<BoardSquareProps> = ({
           {color === "white" ? (
             <ModalHeader
               backgroundColor={color}
-              color="black"
+              color={"black"}
               borderTopRadius="lg"
             >
               {name}

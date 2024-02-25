@@ -1,7 +1,7 @@
 [features]
 seeds = false
 [programs.localnet]
-crypto_monopoly = "3KGcThLuJfwZ2nfZMH9ZbYnUdDLDt3zNphxXMTaumugx"
+crypto_monopoly = "A47a7YmokBd4iHoucPgTvUCknYWRbRsvxsai1ngrRkbM"
 
 [registry]
 url = "https://anchor.projectserum.com"

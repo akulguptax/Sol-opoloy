@@ -47,7 +47,7 @@ const InitPlayerButton = () => {
 
   return (
     <>
-      {gameData && publicKey && (
+      { publicKey && (
         <Button onClick={handleClick} isLoading={isLoading}>
           Join Game
         </Button>

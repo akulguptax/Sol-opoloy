@@ -256,7 +256,7 @@ export type CryptoMonopoly = {
                 {
                   "defined": "Prop"
                 },
-                20
+                40
               ]
             }
           },
@@ -720,7 +720,7 @@ export const IDL: CryptoMonopoly = {
                 {
                   "defined": "Prop"
                 },
-                20
+                40
               ]
             }
           },

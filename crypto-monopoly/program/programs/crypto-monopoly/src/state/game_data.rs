@@ -81,7 +81,7 @@ impl GameData {
             retval = MoveResult::BuyOption;
         }
 
-        self.eventLoop();
+        // self.eventLoop();
 
         return retval;
     }

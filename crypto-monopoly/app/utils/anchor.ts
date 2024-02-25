@@ -14,7 +14,7 @@ export const METAPLEX_READAPI = "https://devnet.helius-rpc.com/?api-key=78065db3
 export const GAME_DATA_SEED = "level_2";
 
 // CryptoMonopoly game program ID
-const programId = new PublicKey("3KGcThLuJfwZ2nfZMH9ZbYnUdDLDt3zNphxXMTaumugx")
+const programId = new PublicKey("A47a7YmokBd4iHoucPgTvUCknYWRbRsvxsai1ngrRkbM")
 
 // Create the program interface using the idl, program ID, and provider
 export const program = new Program<CryptoMonopoly>(IDL, programId, {
@@ -39,6 +39,6 @@ export type GameData = IdlAccounts<CryptoMonopoly>["gameData"]
 export const INIT_BALANCE = 1000000; 
 export const PASS_GO = 200; // get 2/15 of starting each round
 export const DEFAULT_PRICE = 500000; // default MonMoney price for each property (before setting)
-export const FIRESALE_DISCOUNT = 0.75; // discount for fireselling property
-export const DEFAULT_IR = 0.0001; // discount for fireselling property
+// export const FIRESALE_DISCOUNT = 0.75; // discount for fireselling property
+export const DEFAULT_IR = 5; // discount for fireselling property
 export const LOAN_TERM = 5;

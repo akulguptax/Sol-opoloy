@@ -56,7 +56,7 @@ const CreateGameButton = () => {
 
   return (
     <>
-      {publicKey && gameData && (
+      {publicKey && (
         <HStack>
           <Button
             isLoading={isLoadingSession}

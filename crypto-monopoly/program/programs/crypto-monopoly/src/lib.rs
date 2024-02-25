@@ -9,7 +9,7 @@ pub use crate::state::player_data::Player;
 use instructions::*;
 use crate::constants::*;
 
-declare_id!("3KGcThLuJfwZ2nfZMH9ZbYnUdDLDt3zNphxXMTaumugx");
+declare_id!("A47a7YmokBd4iHoucPgTvUCknYWRbRsvxsai1ngrRkbM");
 
 #[program]
 pub mod crypto_monopoly {

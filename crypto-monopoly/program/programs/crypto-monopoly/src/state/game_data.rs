@@ -24,7 +24,7 @@ impl GameData {
         self.turn = 0;
         for i in 0..self.props.len() {
             self.props[i].clear();
-            self.props[i].id = i as u8;
+            self.props[i].id = (i as u8);
         }
         for player in self.players.iter_mut() {
             player.clear();
@@ -63,22 +63,27 @@ impl GameData {
         let new_pos = self.players[p as usize].makeMove(self.last_roll as u8);
 
         // act on new position
+        let mut retval = MoveResult::Noop;
         if self.props[new_pos as usize].ownerId == p {
             // your own property, do nothing
             self.turn = (self.turn + 1) % self.n;
-            return MoveResult::Noop;
+            retval = MoveResult::Noop;
         } else if self.props[new_pos as usize].ownerId < END_PLAYERS {
             // someone else owns this, pay rent!!
             let paid: u32 = self.props[new_pos as usize].rent.try_into().unwrap();
             self.players[p as usize].balance -= paid;
             self.players[self.props[new_pos as usize].ownerId as usize].balance += paid;
             self.turn = (self.turn + 1) % self.n;
-            return MoveResult::Rent;
+            retval = MoveResult::Rent;
         } else {
             // no one owns it, you have the option to buy it
             // self.state = State::PostRoll;
-            return MoveResult::BuyOption;
+            retval = MoveResult::BuyOption;
         }
+
+        self.eventLoop();
+
+        return retval;
     }
 
     pub fn getPlayer(&self, p: &Pubkey) -> Result<Player> {
@@ -113,20 +118,13 @@ impl GameData {
     //     players[p].balance += props[pos].price;
     // }
 
-    //     pub fn getLoan(&mut self, player : Pubkey, amt : u32) -> bool {
-    //         // TODO - figure out how to accept Sol here
-    //         let p = self.getPlayerIndex(&player)?;
-    //         if players[p].termLeft > 0 {
-    //             // already have loan
-    //             return false;
-    //         }
-    //         players[p].termLeft = LOAN_TERM; // TODO FIGURE OUT WHERE THIS DECREMENTS AND SCREAMS
-    //             // AND WHERE INTEREST IS CHARGED
-    //             // BASICALLY A 'EVENT LOOP' FUNC ON EVERY ROLL
-    //         players[p].balance += amt;
-    //         players[p].loanAmt += amt;
-    //         return true;
-    //     }
+    pub fn getLoan(&mut self, p : u8, amt : u32) -> Result<()> {
+        // TODO - figure out how to accept Sol here
+        self.players[p as usize].balance += amt;
+        self.players[p as usize].loanAmt += amt;
+        self.players[p as usize].termLeft = LOAN_TERM;
+        return Ok(());
+    }
 
     // pub fn payLoan(&mut self, player : Pubkey, amt : u32) -> bool {
     //     let p = self.getPlayerIndex(&player)?;

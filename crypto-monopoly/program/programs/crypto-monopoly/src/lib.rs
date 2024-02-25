@@ -42,9 +42,15 @@ pub mod crypto_monopoly {
         return Ok(get_player::get_player(ctx)?);
     }
 
-    pub fn buy_prop(ctx: Context<BuyPropContext>, _level_seed: String, pos : u8, payment : u32) -> Result<()> {
+    pub fn buy_prop(ctx: Context<InitPlayer>, _level_seed: String, pos : u8, payment : u32) -> Result<()> {
         return Ok(buy_prop::buy_prop(ctx, pos, payment)?);
     }
+
+    pub fn get_loan(ctx: Context<InitPlayer>, _level_seed: String, amt : u32) -> Result<()> {
+        return Ok(get_loan::get_loan(ctx, amt)?);
+    }
+
+    
 
     // This function lets the player chop a tree and get 1 wood. The session_auth_or macro
     // lets the player either use their session token or their main wallet. (The counter is only

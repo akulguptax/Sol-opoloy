@@ -12,4 +12,8 @@ pub enum GameErrorCode {
     InsufficientFunds,
     #[msg("Wrong Location")]
     WrongLocation,
+    #[msg("Already have a loan")]
+    AlreadyBorrowing,
+    #[msg("Over-levered")]
+    OverLevered,
 }

@@ -1,10 +1,11 @@
 pub use crate::errors::*;
 pub use crate::constants::*;
-use crate::state::player_data::Player;
+// use crate::state::player_data::Player;
 use crate::state::game_data::GameData;
+use crate::instructions::init_player::InitPlayer;
 use anchor_lang::prelude::*;
 
-pub fn buy_prop(ctx: Context<BuyPropContext>, pos : u8, payment : u32) -> Result<()> {
+pub fn buy_prop(ctx: Context<InitPlayer>, pos : u8, payment : u32) -> Result<()> {
     // enforce:
     let game_data = &ctx.accounts.game_data;
     let p = game_data.getPlayerIndex(&ctx.accounts.signer.key())?;
@@ -37,22 +38,22 @@ pub fn buy_prop(ctx: Context<BuyPropContext>, pos : u8, payment : u32) -> Result
 //     pub pay: u32,
 // }
 
-#[derive(Accounts)]
-#[instruction(level_seed: String)]
-pub struct BuyPropContext<'info> {
-    #[account(
-        init_if_needed,
-        payer = signer,
-        space = 10000, // 8 + 8 for anchor account discriminator and the u32. Using 1000 to have space to expand easily.
-        seeds = [level_seed.as_ref()],
-        bump,
-    )]
-    pub game_data: Box<Account<'info, GameData>>,
+// #[derive(Accounts)]
+// #[instruction(level_seed: String)]
+// pub struct BuyPropContext<'info> {
+//     #[account(
+//         init_if_needed,
+//         payer = signer,
+//         space = 10000, // 8 + 8 for anchor account discriminator and the u32. Using 1000 to have space to expand easily.
+//         seeds = [level_seed.as_ref()],
+//         bump,
+//     )]
+//     pub game_data: Box<Account<'info, GameData>>,
 
-    // #[account(mut)]
-    // pub myinfo : Account<'info, PurchaseInfo>,
+//     // #[account(mut)]
+//     // pub myinfo : Account<'info, PurchaseInfo>,
 
-    #[account(mut)]
-    pub signer: Signer<'info>,
-    pub system_program: Program<'info, System>,
-}
+//     #[account(mut)]
+//     pub signer: Signer<'info>,
+//     pub system_program: Program<'info, System>,
+// }

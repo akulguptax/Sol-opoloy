@@ -37,9 +37,9 @@ impl GameData {
     pub fn onInitPlayer(&mut self, player : Pubkey) -> Result<()> {
         // TODO - accept SOL and make sure it matches correct
 
-        let i = self.getPlayerIndex(&player)?;
-        self.players[i as usize].init(i, player);
+        self.players[self.n as usize].init(self.n, player)?;
         self.n += 1;
+        // let i = self.getPlayerIndex(&player)?;
         return Ok(());
     }
 

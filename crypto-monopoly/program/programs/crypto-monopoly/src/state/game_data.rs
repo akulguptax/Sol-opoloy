@@ -97,6 +97,8 @@ impl GameData {
         // change
         //      player balance
         self.players[p as usize].balance -= payment as u32;
+        self.props[pos as usize].price = payment;
+        self.props[pos as usize].rent = (payment>>3) as u16;
 
         //      property owner
         self.props[pos as usize].bought(p);

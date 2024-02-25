@@ -9,13 +9,13 @@ use crate::state::player_data::Player;
 #[account]
 #[derive(Copy)]
 pub struct GameData {
-    buyin : u32,
+    pub buyin : u32,
     pub turn: u8,
     // pub state: State,
     pub props: [Prop; 28],
     pub players: [Player; 4],
-    n : u8,
-    last_roll : u8,
+    pub n : u8,
+    pub last_roll : u8,
 }
 
 impl GameData {
@@ -71,7 +71,7 @@ impl GameData {
             // your own property, do nothing
             self.turn = (self.turn + 1)%self.n;
             return MoveResult::Noop;
-        } else if self.props[new_pos as usize].ownerId >= 0 {
+        } else if self.props[new_pos as usize].ownerId < END_PLAYERS {
             // someone else owns this, pay rent!!
             let paid : u64 = self.props[new_pos as usize].rent.try_into().unwrap();
             self.players[p as usize].balance -= paid;

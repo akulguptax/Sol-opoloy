@@ -13,7 +13,7 @@ pub const DEFAULT_IR : f64 = 0.0001; // discount for fireselling property
 pub const LOAN_TERM : u8 = 5;
 
 pub const END_PROPS : u8 = 50;
-pub const END_PLAYERS : u8 = 5;
+pub const END_PLAYERS : u8 = 4;
 
 
 #[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq, Copy)]

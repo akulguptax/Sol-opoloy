@@ -15,14 +15,13 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import BuyButton from "./BuyButton";
-
+import SellButton from "./SellButton";
 interface BoardSquareProps {
   name: string;
   color: string;
   price: number;
   details: string;
 }
-
 const BoardSquare: React.FC<BoardSquareProps> = ({
   name,
   color,
@@ -30,7 +29,6 @@ const BoardSquare: React.FC<BoardSquareProps> = ({
   details,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   return (
     <>
       <Box
@@ -42,7 +40,6 @@ const BoardSquare: React.FC<BoardSquareProps> = ({
         onClick={onOpen}
         cursor="pointer"
       ></Box>
-
       <Modal
         isOpen={isOpen}
         onClose={onClose}
@@ -77,6 +74,7 @@ const BoardSquare: React.FC<BoardSquareProps> = ({
           </ModalBody>
           <ModalFooter backgroundColor="gray.100" borderBottomRadius="lg">
             <BuyButton playerId={5} propertyId={5}></BuyButton>
+            <SellButton playerId={5} propertyId={5}  />
             <Button colorScheme={color} color="black" onClick={onClose}>
               Close
             </Button>
@@ -86,5 +84,4 @@ const BoardSquare: React.FC<BoardSquareProps> = ({
     </>
   );
 };
-
 export default BoardSquare;

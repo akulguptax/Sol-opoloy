@@ -5,29 +5,26 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useSessionWallet } from "@magicblock-labs/gum-react-sdk";
 import { useGameState } from "@/contexts/GameStateProvider";
 import { GAME_DATA_SEED, gameDataPDA, program } from "@/utils/anchor";
-
-const SellButton = () => {
+type SellButtonProps = {
+  playerId: number;
+  propertyId: number;
+};
+const SellButton: React.FC<SellButtonProps> = ({ playerId, propertyId }) => {
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const sessionWallet = useSessionWallet();
-  const { gameState, playerDataPDA } = useGameState();
+  const { gameData, playerDataPDA } = useGameState();
   const [isLoadingSession, setIsLoadingSession] = useState(false);
   const [isLoadingMainWallet, setIsLoadingMainWallet] = useState(false);
   const [transactionCounter, setTransactionCounter] = useState(0);
-
   const onSellClick = useCallback(async () => {
     setIsLoadingSession(true);
     if (!playerDataPDA || !sessionWallet) return;
     setTransactionCounter(transactionCounter + 1);
-
     try {
-      
       // Check if player can owns/can sell, if so add money to player
       // set prop in gameData to null/empty
       // playerData remove the prop
-      
-
-
       // const transaction = await program.methods
       //   .chopTree(GAME_DATA_SEED, transactionCounter)
       //   .accounts({
@@ -49,12 +46,9 @@ const SellButton = () => {
       setIsLoadingSession(false);
     }
   }, [sessionWallet]);
-
-  
-
   return (
     <>
-      {publicKey && gameState && (
+      {publicKey && gameData && (
         <HStack>
           {sessionWallet && sessionWallet.sessionToken != null && (
             <Button
@@ -65,11 +59,9 @@ const SellButton = () => {
               Sell Property
             </Button>
           )}
-
         </HStack>
       )}
     </>
   );
 };
-
 export default SellButton;

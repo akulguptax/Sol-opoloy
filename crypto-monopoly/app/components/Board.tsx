@@ -2,7 +2,6 @@ import React from "react";
 import { Grid, GridItem, Box } from "@chakra-ui/react";
 import BoardSquare from "./BoardSquare";
 import { Player } from "./PlayerTable";
-
 const boardData = [
   {
     name: "Go",
@@ -285,11 +284,9 @@ const boardData = [
     details: "The most prestigious property on the board.",
   },
 ];
-
 type BoardProps = {
   players: Player[];
 };
-
 const Board: React.FC<BoardProps> = ({ players }) => {
   const squareSize = "4vw";
   return (
@@ -305,18 +302,18 @@ const Board: React.FC<BoardProps> = ({ players }) => {
           let positionProps = {};
           if (index < 11) {
             // Top row
-            positionProps = { colStart: index, rowStart: 1 };
+            console.log(index, square.name);
+            positionProps = { colStart: index + 1, rowStart: 1 };
           } else if (index < 21) {
             // Right side
             positionProps = { colStart: 11, rowStart: index - 9 };
           } else if (index < 31) {
             // Bottom row
-            positionProps = { colStart: 30 - index, rowStart: 11 };
+            positionProps = { colStart: 31 - index, rowStart: 11 };
           } else {
             // Left side
             positionProps = { colStart: 1, rowStart: 41 - index };
           }
-
           return (
             <GridItem
               key={index}
@@ -341,5 +338,4 @@ const Board: React.FC<BoardProps> = ({ players }) => {
     </Box>
   );
 };
-
 export default Board;

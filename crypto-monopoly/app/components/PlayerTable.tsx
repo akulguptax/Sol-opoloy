@@ -14,11 +14,13 @@ import {
   Button,
 } from "@chakra-ui/react";
 import PlayerModal from "./PlayerModal"; // Ensure this component is correctly implemented
+import { boardData } from "./Board";
 
 export interface Player {
   id: number;
   name: string;
   money: number;
+  location: number;
 }
 
 const players = [
@@ -27,12 +29,14 @@ const players = [
     name: "Player One",
     team: "Team A",
     money: 100,
+    location: 2,
   },
   {
     id: 2,
     name: "Player Two",
     team: "Team B",
     money: 200,
+    location: 5,
   },
 ];
 
@@ -52,6 +56,7 @@ const PlayerTable: React.FC = () => {
           <Tr>
             <Th>Name</Th>
             <Th isNumeric>Money</Th>
+            <Th>Location</Th>
             <Th textAlign="center">Actions</Th>
           </Tr>
         </Thead>
@@ -63,6 +68,9 @@ const PlayerTable: React.FC = () => {
               </Td>
               <Td isNumeric>
                 <Text fontSize="sm">${player.money}</Text>
+              </Td>
+              <Td>
+                <Text fontSize="sm">{boardData[player.location].name}</Text>
               </Td>
               <Td textAlign="center">
                 <Tooltip label="View Details">

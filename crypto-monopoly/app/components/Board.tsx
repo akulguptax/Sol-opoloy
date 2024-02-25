@@ -2,7 +2,8 @@ import React from "react";
 import { Grid, GridItem, Box } from "@chakra-ui/react";
 import BoardSquare from "./BoardSquare";
 import { Player } from "./PlayerTable";
-const boardData = [
+
+export const boardData = [
   {
     name: "Go",
     type: "corner",

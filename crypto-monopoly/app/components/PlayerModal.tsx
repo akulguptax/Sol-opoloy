@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 import { Player } from "./PlayerTable";
+import { boardData } from "./Board";
 
 interface PlayerModalProps {
   player: Player;
@@ -32,6 +33,8 @@ const PlayerModal: React.FC<PlayerModalProps> = ({
         <ModalBody>
           <p>Name: {player.name}</p>
           <p>Money: {player.money}</p>
+          <p>Location: {boardData[player.location].name}</p>
+          <p>Properties: </p>
         </ModalBody>
         <ModalFooter>
           <Button colorScheme="blue" mr={3} onClick={onClose}>

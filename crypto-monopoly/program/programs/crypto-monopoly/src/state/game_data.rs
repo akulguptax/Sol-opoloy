@@ -23,10 +23,11 @@ impl GameData {
     pub fn onInitGame(&mut self, buyin_: u32) -> Result<()> {
         self.buyin = buyin_;
         self.n = 0;
+        self.turn = 0;
         for prop in self.props.iter_mut() {
             prop.clear();
         }
-        self.state = State::GameSetupProgress;
+        self.state = State::PreRoll;
         return Ok(());
     }
 
@@ -36,10 +37,6 @@ impl GameData {
         let i = self.getPlayerIndex(&player)?;
         self.players[i as usize].init(i, player);
         self.n += 1;
-        self.state = State::GameSetupProgress;
-        if self.n==4 {
-            self.startGame();
-        }
         return Ok(());
     }
 

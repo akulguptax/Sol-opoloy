@@ -5,9 +5,6 @@ use anchor_lang::prelude::*;
 
 // TODO - make this accept SOL
 pub fn init_player(ctx: Context<InitPlayer>) -> Result<()> {
-    if ctx.accounts.game_data.state!=State::GameSetupProgress{
-        return err!(GameErrorCode::NonEmptyGameState);
-    }
     ctx.accounts.game_data.onInitPlayer(ctx.accounts.signer.key());
     Ok(())
 }

@@ -5,39 +5,43 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useSessionWallet } from "@magicblock-labs/gum-react-sdk";
 import { useGameState } from "@/contexts/GameStateProvider";
 import { GAME_DATA_SEED, gameDataPDA, program } from "@/utils/anchor";
+import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
+import { randomInt } from "crypto";
 
 const RollDice = () => {
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const sessionWallet = useSessionWallet();
-  const { gameState, playerDataPDA } = useGameState();
+  const { gameData, playerDataPDA } = useGameState();
   const [isLoadingSession, setIsLoadingSession] = useState(false);
-  const [isLoadingMainWallet, setIsLoadingMainWallet] = useState(false);
-  const [transactionCounter, setTransactionCounter] = useState(0);
+  // const [isLoadingMainWallet, setIsLoadingMainWallet] = useState(false);
+  // const [transactionCounter, setTransactionCounter] = useState(0);
 
   const onRollClick = useCallback(async () => {
+    const roll1 = Math.floor(Math.random() * 6) + 1;
+    const roll2 = Math.floor(Math.random() * 6) + 1;
     setIsLoadingSession(true);
-    if (!playerDataPDA || !sessionWallet) return;
-    setTransactionCounter(transactionCounter + 1);
+    if (!sessionWallet || !publicKey) return;
 
     try {
-      // const transaction = await program.methods
-      //   .chopTree(GAME_DATA_SEED, transactionCounter)
-      //   .accounts({
-      //     player: playerDataPDA,
-      //     gameData: gameDataPDA,
-      //     signer: sessionWallet.publicKey!,
-      //     sessionToken: sessionWallet.sessionToken,
-      //   })
-      //   .transaction();
-      // const txids = await sessionWallet.signAndSendTransaction!(transaction);
-      // if (txids && txids.length > 0) {
-      //   console.log("Transaction sent:", txids);
-      // } else {
-      //   console.error("Failed to send transaction");
-      // }
+      const rollInstructions = await program.methods
+        .startTurn(GAME_DATA_SEED, roll1 + roll2)
+        .accounts({
+          gameData: gameDataPDA,
+          signer: publicKey,
+          systemProgram: SystemProgram.programId,
+        })
+        .instruction();
+
+      const transaction = new Transaction().add(rollInstructions);
+
+      const txSig = await sendTransaction(transaction, connection, {
+        skipPreflight: true,
+      });
+      
+      console.log(`https://explorer.solana.com/tx/${txSig}?cluster=devnet`);
     } catch (error: any) {
-      console.log("error", `Chopping failed! ${error?.message}`);
+      console.log("error", `Rolling failed! ${error?.message}`);
     } finally {
       setIsLoadingSession(false);
     }
@@ -45,17 +49,15 @@ const RollDice = () => {
 
   return (
     <>
-      {publicKey && gameState && (
+      {publicKey && gameData && (
         <HStack>
-          {sessionWallet && sessionWallet.sessionToken != null && (
-            <Button
-              isLoading={isLoadingSession}
-              onClick={onRollClick}
-              width="175px"
-            >
-              Roll Dice
-            </Button>
-          )}
+          <Button
+            isLoading={isLoadingSession}
+            onClick={onRollClick}
+            width="175px"
+          >
+            Roll Dice
+          </Button>
         </HStack>
       )}
     </>

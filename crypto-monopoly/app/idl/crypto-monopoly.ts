@@ -1,15 +1,40 @@
 export type CryptoMonopoly = {
   "version": "0.1.0",
-  "name": "crypto-monopoly",
+  "name": "crypto_monopoly",
   "instructions": [
     {
-      "name": "initPlayer",
+      "name": "initGame",
       "accounts": [
         {
-          "name": "player",
+          "name": "gameData",
           "isMut": true,
           "isSigner": false
         },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        },
+        {
+          "name": "amt",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "initPlayer",
+      "accounts": [
         {
           "name": "gameData",
           "isMut": true,
@@ -34,19 +59,62 @@ export type CryptoMonopoly = {
       ]
     },
     {
-      "name": "chopTree",
+      "name": "whoseTurn",
       "accounts": [
         {
-          "name": "sessionToken",
-          "isMut": false,
-          "isSigner": false,
-          "isOptional": true
-        },
-        {
-          "name": "player",
+          "name": "gameData",
           "isMut": true,
           "isSigner": false
         },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        }
+      ],
+      "returns": "publicKey"
+    },
+    {
+      "name": "getLastRoll",
+      "accounts": [
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        }
+      ],
+      "returns": "u8"
+    },
+    {
+      "name": "startTurn",
+      "accounts": [
         {
           "name": "gameData",
           "isMut": true,
@@ -69,8 +137,104 @@ export type CryptoMonopoly = {
           "type": "string"
         },
         {
-          "name": "counter",
-          "type": "u16"
+          "name": "r",
+          "type": "u8"
+        }
+      ],
+      "returns": {
+        "defined": "MoveResult"
+      }
+    },
+    {
+      "name": "getPlayer",
+      "accounts": [
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "defined": "Player"
+      }
+    },
+    {
+      "name": "buyProp",
+      "accounts": [
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        },
+        {
+          "name": "pos",
+          "type": "u8"
+        },
+        {
+          "name": "payment",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "getLoan",
+      "accounts": [
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        },
+        {
+          "name": "amt",
+          "type": "u32"
         }
       ]
     }
@@ -82,48 +246,182 @@ export type CryptoMonopoly = {
         "kind": "struct",
         "fields": [
           {
-            "name": "totalWoodCollected",
-            "type": "u64"
+            "name": "buyin",
+            "type": "u32"
+          },
+          {
+            "name": "turn",
+            "type": "u8"
+          },
+          {
+            "name": "props",
+            "type": {
+              "array": [
+                {
+                  "defined": "Prop"
+                },
+                40
+              ]
+            }
+          },
+          {
+            "name": "players",
+            "type": {
+              "array": [
+                {
+                  "defined": "Player"
+                },
+                4
+              ]
+            }
+          },
+          {
+            "name": "n",
+            "type": "u8"
+          },
+          {
+            "name": "lastRoll",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "Player",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "playerId",
+            "type": "u8"
+          },
+          {
+            "name": "acct",
+            "type": "publicKey"
+          },
+          {
+            "name": "balance",
+            "type": "u32"
+          },
+          {
+            "name": "loanAmt",
+            "type": "u32"
+          },
+          {
+            "name": "termLeft",
+            "type": "u8"
+          },
+          {
+            "name": "pos",
+            "type": "u8"
+          },
+          {
+            "name": "solOwed",
+            "type": "u32"
           }
         ]
       }
     },
     {
-      "name": "playerData",
+      "name": "Prop",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "authority",
-            "type": "publicKey"
-          },
-          {
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "name": "level",
+            "name": "id",
             "type": "u8"
           },
           {
-            "name": "xp",
-            "type": "u64"
+            "name": "price",
+            "type": "u32"
           },
           {
-            "name": "wood",
-            "type": "u64"
-          },
-          {
-            "name": "energy",
-            "type": "u64"
-          },
-          {
-            "name": "lastLogin",
-            "type": "i64"
-          },
-          {
-            "name": "lastId",
+            "name": "rent",
             "type": "u16"
+          },
+          {
+            "name": "ownerId",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Colors",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "None"
+          },
+          {
+            "name": "Brown"
+          },
+          {
+            "name": "Orange"
+          },
+          {
+            "name": "Pink"
+          },
+          {
+            "name": "LightBlue"
+          },
+          {
+            "name": "Red"
+          },
+          {
+            "name": "Yellow"
+          },
+          {
+            "name": "Green"
+          },
+          {
+            "name": "Blue"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Empty"
+          },
+          {
+            "name": "GameSetupProgress"
+          },
+          {
+            "name": "GameSetupComplete"
+          },
+          {
+            "name": "PreRoll"
+          },
+          {
+            "name": "PostRoll"
+          },
+          {
+            "name": "AfterGame"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MoveResult",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Noop"
+          },
+          {
+            "name": "Rent"
+          },
+          {
+            "name": "BuyOption"
           }
         ]
       }
@@ -132,29 +430,79 @@ export type CryptoMonopoly = {
   "errors": [
     {
       "code": 6000,
-      "name": "NotEnoughEnergy",
-      "msg": "Not enough energy"
+      "name": "NonEmptyGameState",
+      "msg": "Game non-empty state"
     },
     {
       "code": 6001,
-      "name": "WrongAuthority",
-      "msg": "Wrong Authority"
+      "name": "PlayerIndexNotFound",
+      "msg": "Player Index Not Found"
+    },
+    {
+      "code": 6002,
+      "name": "NotYourTurn",
+      "msg": "Not your turn"
+    },
+    {
+      "code": 6003,
+      "name": "InsufficientFunds",
+      "msg": "Insufficient Funds or Wrong Amount"
+    },
+    {
+      "code": 6004,
+      "name": "WrongLocation",
+      "msg": "Wrong Location"
+    },
+    {
+      "code": 6005,
+      "name": "AlreadyBorrowing",
+      "msg": "Already have a loan"
+    },
+    {
+      "code": 6006,
+      "name": "OverLevered",
+      "msg": "Over-levered"
     }
   ]
 };
 
 export const IDL: CryptoMonopoly = {
   "version": "0.1.0",
-  "name": "crypto-monopoly",
+  "name": "crypto_monopoly",
   "instructions": [
     {
-      "name": "initPlayer",
+      "name": "initGame",
       "accounts": [
         {
-          "name": "player",
+          "name": "gameData",
           "isMut": true,
           "isSigner": false
         },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        },
+        {
+          "name": "amt",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "initPlayer",
+      "accounts": [
         {
           "name": "gameData",
           "isMut": true,
@@ -179,19 +527,62 @@ export const IDL: CryptoMonopoly = {
       ]
     },
     {
-      "name": "chopTree",
+      "name": "whoseTurn",
       "accounts": [
         {
-          "name": "sessionToken",
-          "isMut": false,
-          "isSigner": false,
-          "isOptional": true
-        },
-        {
-          "name": "player",
+          "name": "gameData",
           "isMut": true,
           "isSigner": false
         },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        }
+      ],
+      "returns": "publicKey"
+    },
+    {
+      "name": "getLastRoll",
+      "accounts": [
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        }
+      ],
+      "returns": "u8"
+    },
+    {
+      "name": "startTurn",
+      "accounts": [
         {
           "name": "gameData",
           "isMut": true,
@@ -214,8 +605,104 @@ export const IDL: CryptoMonopoly = {
           "type": "string"
         },
         {
-          "name": "counter",
-          "type": "u16"
+          "name": "r",
+          "type": "u8"
+        }
+      ],
+      "returns": {
+        "defined": "MoveResult"
+      }
+    },
+    {
+      "name": "getPlayer",
+      "accounts": [
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "defined": "Player"
+      }
+    },
+    {
+      "name": "buyProp",
+      "accounts": [
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        },
+        {
+          "name": "pos",
+          "type": "u8"
+        },
+        {
+          "name": "payment",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "getLoan",
+      "accounts": [
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        },
+        {
+          "name": "amt",
+          "type": "u32"
         }
       ]
     }
@@ -227,48 +714,182 @@ export const IDL: CryptoMonopoly = {
         "kind": "struct",
         "fields": [
           {
-            "name": "totalWoodCollected",
-            "type": "u64"
+            "name": "buyin",
+            "type": "u32"
+          },
+          {
+            "name": "turn",
+            "type": "u8"
+          },
+          {
+            "name": "props",
+            "type": {
+              "array": [
+                {
+                  "defined": "Prop"
+                },
+                40
+              ]
+            }
+          },
+          {
+            "name": "players",
+            "type": {
+              "array": [
+                {
+                  "defined": "Player"
+                },
+                4
+              ]
+            }
+          },
+          {
+            "name": "n",
+            "type": "u8"
+          },
+          {
+            "name": "lastRoll",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "Player",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "playerId",
+            "type": "u8"
+          },
+          {
+            "name": "acct",
+            "type": "publicKey"
+          },
+          {
+            "name": "balance",
+            "type": "u32"
+          },
+          {
+            "name": "loanAmt",
+            "type": "u32"
+          },
+          {
+            "name": "termLeft",
+            "type": "u8"
+          },
+          {
+            "name": "pos",
+            "type": "u8"
+          },
+          {
+            "name": "solOwed",
+            "type": "u32"
           }
         ]
       }
     },
     {
-      "name": "playerData",
+      "name": "Prop",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "authority",
-            "type": "publicKey"
-          },
-          {
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "name": "level",
+            "name": "id",
             "type": "u8"
           },
           {
-            "name": "xp",
-            "type": "u64"
+            "name": "price",
+            "type": "u32"
           },
           {
-            "name": "wood",
-            "type": "u64"
-          },
-          {
-            "name": "energy",
-            "type": "u64"
-          },
-          {
-            "name": "lastLogin",
-            "type": "i64"
-          },
-          {
-            "name": "lastId",
+            "name": "rent",
             "type": "u16"
+          },
+          {
+            "name": "ownerId",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Colors",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "None"
+          },
+          {
+            "name": "Brown"
+          },
+          {
+            "name": "Orange"
+          },
+          {
+            "name": "Pink"
+          },
+          {
+            "name": "LightBlue"
+          },
+          {
+            "name": "Red"
+          },
+          {
+            "name": "Yellow"
+          },
+          {
+            "name": "Green"
+          },
+          {
+            "name": "Blue"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Empty"
+          },
+          {
+            "name": "GameSetupProgress"
+          },
+          {
+            "name": "GameSetupComplete"
+          },
+          {
+            "name": "PreRoll"
+          },
+          {
+            "name": "PostRoll"
+          },
+          {
+            "name": "AfterGame"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MoveResult",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Noop"
+          },
+          {
+            "name": "Rent"
+          },
+          {
+            "name": "BuyOption"
           }
         ]
       }
@@ -277,13 +898,38 @@ export const IDL: CryptoMonopoly = {
   "errors": [
     {
       "code": 6000,
-      "name": "NotEnoughEnergy",
-      "msg": "Not enough energy"
+      "name": "NonEmptyGameState",
+      "msg": "Game non-empty state"
     },
     {
       "code": 6001,
-      "name": "WrongAuthority",
-      "msg": "Wrong Authority"
+      "name": "PlayerIndexNotFound",
+      "msg": "Player Index Not Found"
+    },
+    {
+      "code": 6002,
+      "name": "NotYourTurn",
+      "msg": "Not your turn"
+    },
+    {
+      "code": 6003,
+      "name": "InsufficientFunds",
+      "msg": "Insufficient Funds or Wrong Amount"
+    },
+    {
+      "code": 6004,
+      "name": "WrongLocation",
+      "msg": "Wrong Location"
+    },
+    {
+      "code": 6005,
+      "name": "AlreadyBorrowing",
+      "msg": "Already have a loan"
+    },
+    {
+      "code": 6006,
+      "name": "OverLevered",
+      "msg": "Over-levered"
     }
   ]
 };

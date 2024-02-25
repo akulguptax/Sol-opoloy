@@ -1,6 +1,22 @@
 //! All instructions
-pub mod chop_tree;
+pub mod init_game;
 pub mod init_player;
+pub mod whose_turn;
+pub mod get_last_roll;
+pub mod start_turn;
+pub mod get_player;
+pub mod buy_prop;
+pub mod sell_prop;
+pub mod get_loan;
+pub mod pay_loan;
 
-pub use chop_tree::*;
+pub use init_game::*;
 pub use init_player::*;
+pub use whose_turn::*;
+pub use get_last_roll::*;
+pub use start_turn::*;
+pub use get_player::*;
+pub use buy_prop::*;
+pub use sell_prop::*;
+pub use get_loan::*;
+pub use pay_loan::*;

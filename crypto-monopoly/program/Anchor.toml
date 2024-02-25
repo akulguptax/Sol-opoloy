@@ -1,13 +1,13 @@
 [features]
 seeds = false
 [programs.localnet]
-crypto_monopoly = "MkabCfyUD6rBTaYHpgKBBpBo5qzWA2pK2hrGGKMurJt"
+crypto_monopoly = "A47a7YmokBd4iHoucPgTvUCknYWRbRsvxsai1ngrRkbM"
 
 [registry]
 url = "https://anchor.projectserum.com"
 
 [provider]
-cluster = "localnet"
+cluster = "devnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]

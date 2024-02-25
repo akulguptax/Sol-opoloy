@@ -13,36 +13,40 @@ import {
   Button,
   Text,
   VStack,
+  HStack,
 } from "@chakra-ui/react";
 import BuyButton from "./BuyButton";
-
+import SellButton from "./SellButton";
 interface BoardSquareProps {
   name: string;
   color: string;
   price: number;
   details: string;
+  position: number;
+  type: string;
 }
-
 const BoardSquare: React.FC<BoardSquareProps> = ({
   name,
   color,
   price,
   details,
+  position,
+  type,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   return (
     <>
       <Box
         bg={color}
         p="4"
+        borderColor="black"
+        borderWidth="3px"
         borderRadius="lg"
         boxShadow="md"
         color="white"
         onClick={onOpen}
         cursor="pointer"
       ></Box>
-
       <Modal
         isOpen={isOpen}
         onClose={onClose}
@@ -51,14 +55,25 @@ const BoardSquare: React.FC<BoardSquareProps> = ({
       >
         <ModalOverlay />
         <ModalContent borderRadius="lg" backgroundColor="gray.50">
-          <ModalHeader
-            backgroundColor={color}
-            color="white"
-            borderTopRadius="lg"
-          >
-            {name}
-            <ModalCloseButton color="white" _focus={{ boxShadow: "none" }} />
-          </ModalHeader>
+          {color == "#faf9f6" ? (
+            <ModalHeader
+              backgroundColor={color}
+              color="black"
+              borderTopRadius="lg"
+            >
+              {name}
+              <ModalCloseButton color="white" _focus={{ boxShadow: "none" }} />
+            </ModalHeader>
+          ) : (
+            <ModalHeader
+              backgroundColor={color}
+              color="white"
+              borderTopRadius="lg"
+            >
+              {name}
+              <ModalCloseButton color="white" _focus={{ boxShadow: "none" }} />
+            </ModalHeader>
+          )}
           <ModalBody>
             <VStack spacing={4} align="start">
               <Text fontSize="lg" fontWeight="bold">
@@ -76,7 +91,15 @@ const BoardSquare: React.FC<BoardSquareProps> = ({
             </VStack>
           </ModalBody>
           <ModalFooter backgroundColor="gray.100" borderBottomRadius="lg">
-            <BuyButton playerId={5} propertyId={5}></BuyButton>
+            {(type === "property" ||
+              type === "utility" ||
+              type === "railroad") && (
+              <HStack>
+                <BuyButton cost={price} propertyId={position} />
+                <SellButton propertyId={position} />
+              </HStack>
+            )}
+
             <Button colorScheme={color} color="black" onClick={onClose}>
               Close
             </Button>
@@ -86,5 +109,4 @@ const BoardSquare: React.FC<BoardSquareProps> = ({
     </>
   );
 };
-
 export default BoardSquare;

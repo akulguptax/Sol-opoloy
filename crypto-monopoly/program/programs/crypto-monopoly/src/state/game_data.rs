@@ -141,9 +141,8 @@ impl GameData {
     //         return true;
     //     }
 
+    // TODO - remove this once verifying this works
     pub fn getPlayerIndex(&self, p: &Pubkey) -> Result<u8> {
-        return Ok(0);
-
         for i in 0..self.players.len() {
             if self.players[i].acct == *p {
                 return Ok(i as u8);

@@ -135,6 +135,10 @@ export type CryptoMonopoly = {
         {
           "name": "levelSeed",
           "type": "string"
+        },
+        {
+          "name": "r",
+          "type": "u8"
         }
       ],
       "returns": {
@@ -599,6 +603,10 @@ export const IDL: CryptoMonopoly = {
         {
           "name": "levelSeed",
           "type": "string"
+        },
+        {
+          "name": "r",
+          "type": "u8"
         }
       ],
       "returns": {

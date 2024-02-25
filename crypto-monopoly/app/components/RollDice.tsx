@@ -18,12 +18,14 @@ const RollDice = () => {
   // const [transactionCounter, setTransactionCounter] = useState(0);
 
   const onRollClick = useCallback(async () => {
+    const roll1 = Math.floor(Math.random() * 6) + 1;
+    const roll2 = Math.floor(Math.random() * 6) + 1;
     setIsLoadingSession(true);
     if (!sessionWallet || !publicKey) return;
 
     try {
       const rollInstructions = await program.methods
-        .startTurn(GAME_DATA_SEED, randomInt(1,12))
+        .startTurn(GAME_DATA_SEED, roll1 + roll2)
         .accounts({
           gameData: gameDataPDA,
           signer: publicKey,

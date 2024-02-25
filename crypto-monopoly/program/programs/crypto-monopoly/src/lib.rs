@@ -9,15 +9,15 @@ pub use crate::state::player_data::Player;
 use instructions::*;
 use crate::constants::*;
 
-declare_id!("tW9rCjQkuCFDS8pQqqnEe27P32k96f8Wt1mTpEF1chN");
+declare_id!("4kRzYC7HUuFxxK7sYxz5t4HNSGvr8HavmBzqz7DnxvNV");
 
 #[program]
 pub mod crypto_monopoly {
 
     use super::*;
 
-    pub fn init_game(ctx: Context<InitGame>, _level_seed: String) -> Result<()> {
-        init_game::init_game(ctx);
+    pub fn init_game(ctx: Context<InitGame>, _level_seed: String, amt : u32) -> Result<()> {
+        init_game::init_game(ctx, amt);
         return Ok(());
     }
 

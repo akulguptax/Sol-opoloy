@@ -4,18 +4,18 @@ use crate::errors::*;
 // use crate::{constants::MAX_ENERGY, GameData};
 use anchor_lang::prelude::*;
 
-pub fn init_game(ctx: Context<InitGame>) -> Result<()> {
+pub fn init_game(ctx: Context<InitGame>, data : u32) -> Result<()> {
     if ctx.accounts.game_data.state != State::Empty {
         return err!(GameErrorCode::NonEmptyGameState);
     } 
-    ctx.accounts.game_data.onInitGame(ctx.accounts.buyin.data);
+    ctx.accounts.game_data.onInitGame( data);
     return Ok(());
 }
 
-#[account]
-pub struct BuyinInfo {
-    pub data: u32,
-}
+// #[account]
+// pub struct BuyinInfo {
+//     pub data: u32,
+// }
 
 #[derive(Accounts)]
 #[instruction(level_seed: String)]
@@ -30,8 +30,8 @@ pub struct InitGame<'info> {
     )]
     pub game_data: Box<Account<'info, GameData>>,
 
-    #[account(mut)]
-    pub buyin : Account<'info, BuyinInfo>,
+    // #[account(mut)]
+    // pub buyin : Account<'info, BuyinInfo>,
 
     #[account(mut)]
     pub signer: Signer<'info>,

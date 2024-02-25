@@ -121,7 +121,7 @@ impl GameData {
     pub fn getLoan(&mut self, p : u8, amt : u32) -> Result<()> {
         // TODO - figure out how to accept Sol here
         self.players[p as usize].balance += amt;
-        self.players[p as usize].loanAmt += amt as f64;
+        self.players[p as usize].loanAmt += amt;
         self.players[p as usize].termLeft = LOAN_TERM;
         return Ok(());
     }

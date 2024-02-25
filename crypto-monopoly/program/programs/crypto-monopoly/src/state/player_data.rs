@@ -7,10 +7,10 @@ pub struct Player {
     pub playerId: u8,
     pub acct: Pubkey,
     pub balance: u32,
-    pub loanAmt: f64,
+    pub loanAmt: u32,
     pub termLeft: u8,
     pub pos: u8,
-    pub solOwed: f64
+    pub solOwed: u32
 }
 
 
@@ -19,10 +19,10 @@ impl Player {
         self.playerId = END_PLAYERS;
         self.acct = Pubkey::default();
         self.balance = 0;
-        self.loanAmt = 0.0;
+        self.loanAmt = 0;
         self.termLeft = 0;
         self.pos = 50;
-        self.solOwed = 0.0;
+        self.solOwed = 0;
         
         return Ok(());
     }
@@ -44,7 +44,7 @@ impl Player {
     }
 
     pub fn loanStep(&mut self) {
-        self.solOwed += self.loanAmt * DEFAULT_IR;
+        self.solOwed += self.loanAmt >> DEFAULT_IR;
         if self.termLeft == 1 {
             self.balance -= self.loanAmt as u32; 
         }

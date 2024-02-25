@@ -10,7 +10,7 @@ pub struct Player {
     pub loanAmt: u32,
     pub termLeft: u8,
     pub pos: u8,
-    pub solOwed: u32
+    pub solOwed: i32
 }
 
 
@@ -44,7 +44,7 @@ impl Player {
     }
 
     pub fn loanStep(&mut self) {
-        self.solOwed += self.loanAmt >> DEFAULT_IR;
+        self.solOwed += (self.loanAmt >> DEFAULT_IR);
         if self.termLeft == 1 {
             self.balance -= self.loanAmt as u32; 
         }

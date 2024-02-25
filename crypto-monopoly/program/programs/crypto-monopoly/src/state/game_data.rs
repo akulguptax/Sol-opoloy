@@ -80,7 +80,7 @@ impl GameData {
         }
         
         self.turn = (self.turn + 1) % self.n;
-        // self.eventLoop();
+        self.eventLoop();
 
         return retval;
     }
@@ -151,6 +151,9 @@ impl GameData {
     fn eventLoop(&mut self) {
         // for each player
         for player in self.players.iter_mut() {
+            if player.id >= END_PLAYERS {
+                break;
+            }
             player.loanStep();
         }
         // increase interest due for everyone

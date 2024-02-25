@@ -68,7 +68,7 @@ const GetLoanButton = () => {
           </Button>
           {currentPlayer != undefined && (
             <Button isLoading={isLoadingSession} width="300px">
-              You Owe ${gameData.players[currentPlayer].loanAmt},{" "}
+              You Owe ${gameData.players[currentPlayer].loanAmt} +{" "}
               {gameData.players[currentPlayer].solOwed} Lamports
             </Button>
           )}

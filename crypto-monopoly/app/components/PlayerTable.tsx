@@ -70,14 +70,14 @@ const PlayerTable: React.FC = () => {
                 <Td>
                   <Text
                     fontSize="sm"
-                    style={{
-                      fontWeight:
-                        currentPlayer === player.playerId ? "bold" : "normal",
-                      color:
-                        currentPlayer === player.playerId
-                          ? "purple"
-                          : "initial",
-                    }}
+                    // style={{
+                    //   fontWeight:
+                    //     currentPlayer === player.playerId ? "bold" : "normal",
+                    //   color:
+                    //     currentPlayer === player.playerId
+                    //       ? "purple"
+                    //       : "initial",
+                    // }}
                   >
                     {player?.playerId}
                   </Text>

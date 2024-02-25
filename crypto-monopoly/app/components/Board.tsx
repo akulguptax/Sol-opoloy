@@ -286,9 +286,9 @@ export const boardData = [
   },
 ];
 type BoardProps = {
-  players: Player[];
+  // players: Player[];
 };
-const Board: React.FC<BoardProps> = ({ players }) => {
+const Board: React.FC<BoardProps> = ({}) => {
   const squareSize = "4vw";
   return (
     <Box width="fit-content" margin="auto" overflow="hidden">
@@ -330,7 +330,7 @@ const Board: React.FC<BoardProps> = ({ players }) => {
                 color={square.color}
                 price={square.price}
                 details={square.details}
-                // add someway to highlight square if player index matches
+                position={index}
               />
             </GridItem>
           );

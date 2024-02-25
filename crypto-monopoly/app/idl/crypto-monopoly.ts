@@ -179,11 +179,6 @@ export type CryptoMonopoly = {
           "isSigner": false
         },
         {
-          "name": "myinfo",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
           "name": "signer",
           "isMut": true,
           "isSigner": true
@@ -198,27 +193,19 @@ export type CryptoMonopoly = {
         {
           "name": "levelSeed",
           "type": "string"
+        },
+        {
+          "name": "pos",
+          "type": "u8"
+        },
+        {
+          "name": "payment",
+          "type": "u32"
         }
       ]
     }
   ],
   "accounts": [
-    {
-      "name": "purchaseInfo",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "pos",
-            "type": "u8"
-          },
-          {
-            "name": "pay",
-            "type": "u32"
-          }
-        ]
-      }
-    },
     {
       "name": "gameData",
       "type": {
@@ -233,19 +220,13 @@ export type CryptoMonopoly = {
             "type": "u8"
           },
           {
-            "name": "state",
-            "type": {
-              "defined": "State"
-            }
-          },
-          {
             "name": "props",
             "type": {
               "array": [
                 {
                   "defined": "Prop"
                 },
-                28
+                40
               ]
             }
           },
@@ -288,11 +269,11 @@ export type CryptoMonopoly = {
           },
           {
             "name": "balance",
-            "type": "u64"
+            "type": "u32"
           },
           {
             "name": "loanAmt",
-            "type": "u64"
+            "type": "u32"
           },
           {
             "name": "ir",
@@ -324,11 +305,7 @@ export type CryptoMonopoly = {
           },
           {
             "name": "price",
-            "type": "u64"
-          },
-          {
-            "name": "color",
-            "type": "u8"
+            "type": "u32"
           },
           {
             "name": "rent",
@@ -337,10 +314,6 @@ export type CryptoMonopoly = {
           {
             "name": "ownerId",
             "type": "u8"
-          },
-          {
-            "name": "hasMono",
-            "type": "bool"
           }
         ]
       }
@@ -634,11 +607,6 @@ export const IDL: CryptoMonopoly = {
           "isSigner": false
         },
         {
-          "name": "myinfo",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
           "name": "signer",
           "isMut": true,
           "isSigner": true
@@ -653,27 +621,19 @@ export const IDL: CryptoMonopoly = {
         {
           "name": "levelSeed",
           "type": "string"
+        },
+        {
+          "name": "pos",
+          "type": "u8"
+        },
+        {
+          "name": "payment",
+          "type": "u32"
         }
       ]
     }
   ],
   "accounts": [
-    {
-      "name": "purchaseInfo",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "pos",
-            "type": "u8"
-          },
-          {
-            "name": "pay",
-            "type": "u32"
-          }
-        ]
-      }
-    },
     {
       "name": "gameData",
       "type": {
@@ -688,19 +648,13 @@ export const IDL: CryptoMonopoly = {
             "type": "u8"
           },
           {
-            "name": "state",
-            "type": {
-              "defined": "State"
-            }
-          },
-          {
             "name": "props",
             "type": {
               "array": [
                 {
                   "defined": "Prop"
                 },
-                28
+                40
               ]
             }
           },
@@ -743,11 +697,11 @@ export const IDL: CryptoMonopoly = {
           },
           {
             "name": "balance",
-            "type": "u64"
+            "type": "u32"
           },
           {
             "name": "loanAmt",
-            "type": "u64"
+            "type": "u32"
           },
           {
             "name": "ir",
@@ -779,11 +733,7 @@ export const IDL: CryptoMonopoly = {
           },
           {
             "name": "price",
-            "type": "u64"
-          },
-          {
-            "name": "color",
-            "type": "u8"
+            "type": "u32"
           },
           {
             "name": "rent",
@@ -792,10 +742,6 @@ export const IDL: CryptoMonopoly = {
           {
             "name": "ownerId",
             "type": "u8"
-          },
-          {
-            "name": "hasMono",
-            "type": "bool"
           }
         ]
       }

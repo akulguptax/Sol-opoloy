@@ -7,6 +7,7 @@ import {
   GAME_DATA_SEED,
 } from "@/utils/anchor"
 import { BN } from "@coral-xyz/anchor"
+
 const GameStateContext = createContext<{
   playerDataPDA: PublicKey | null;
   gameData: GameData | null;
@@ -68,7 +69,7 @@ export const GameStateProvider = ({
     program.account.gameData
       .fetch(pda)
       .then((data) => {
-        console.log(data);
+        console.log(data); 
         setGameData(data);
         setCurrentPlayer(data.turn);
       })
@@ -81,6 +82,8 @@ export const GameStateProvider = ({
         "gameData",
         account.data
       );
+      console.log("just got new game data:");
+      console.log(newGameData);
       setGameData(newGameData);
       setCurrentPlayer(newGameData.turn);
     });

@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import PlayerModal from "./PlayerModal"; // Ensure this component is correctly implemented
 import { boardData } from "./Board";
+import { GameStateProvider, useGameState } from "@/contexts/GameStateProvider";
 
 export interface Player {
   id: number;
@@ -43,8 +44,9 @@ const players = [
 const PlayerTable: React.FC = () => {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { gameData, playerDataPDA } = useGameState();
 
-  const handlePlayerClick = (player: Player) => {
+  const handlePlayerClick = (player: any) => {
     setSelectedPlayer(player);
     onOpen();
   };
@@ -54,23 +56,23 @@ const PlayerTable: React.FC = () => {
       <Table variant="simple" size="sm">
         <Thead>
           <Tr>
-            <Th>Name</Th>
+            <Th>Player ID</Th>
             <Th isNumeric>Money</Th>
             <Th>Location</Th>
             <Th textAlign="center">Actions</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {players.map((player) => (
-            <Tr key={player.id}>
+          {gameData?.players.map((player, index) => (
+            <Tr key={index}>
               <Td>
-                <Text fontSize="sm">{player.name}</Text>
+                <Text fontSize="sm">{player?.playerId}</Text>
               </Td>
               <Td isNumeric>
-                <Text fontSize="sm">${player.money}</Text>
+                <Text fontSize="sm">${player?.balance.toString()}</Text>
               </Td>
               <Td>
-                <Text fontSize="sm">{boardData[player.location].name}</Text>
+                <Text fontSize="sm">{boardData[player?.pos]?.name}</Text>
               </Td>
               <Td textAlign="center">
                 <Tooltip label="View Details">

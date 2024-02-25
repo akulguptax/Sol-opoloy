@@ -21,12 +21,14 @@ interface BoardSquareProps {
   color: string;
   price: number;
   details: string;
+  position: number;
 }
 const BoardSquare: React.FC<BoardSquareProps> = ({
   name,
   color,
   price,
   details,
+  position,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -73,8 +75,8 @@ const BoardSquare: React.FC<BoardSquareProps> = ({
             </VStack>
           </ModalBody>
           <ModalFooter backgroundColor="gray.100" borderBottomRadius="lg">
-            <BuyButton playerId={5} propertyId={5}></BuyButton>
-            <SellButton playerId={5} propertyId={5}  />
+            <BuyButton cost={price} propertyId={position} />
+            {/* <SellButton cost={price} propertyId={5}  /> */}
             <Button colorScheme={color} color="black" onClick={onClose}>
               Close
             </Button>

@@ -21,7 +21,7 @@ impl Player {
         self.balance = 0;
         self.loanAmt = 0;
         self.termLeft = 0;
-        self.pos = 50;
+        self.pos = END_PLAYERS;
         self.solOwed = 0;
         
         return Ok(());

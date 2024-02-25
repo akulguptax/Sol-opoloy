@@ -11,9 +11,5 @@ pub fn start_turn(ctx: Context<InitPlayer>, r: u8) -> Result<MoveResult> {
     } else if ctx.accounts.game_data.turn != p {
         return err!(GameErrorCode::NotYourTurn);
     }
-    // if ctx.accounts.game_data.state != State::PreRoll || 
-    //     ctx.accounts.game_data.turn as u8 != p {
-    //     return err!(GameErrorCode::NotYourTurn);
-    // }
     return Ok(ctx.accounts.game_data.startTurn(p,r));
 }

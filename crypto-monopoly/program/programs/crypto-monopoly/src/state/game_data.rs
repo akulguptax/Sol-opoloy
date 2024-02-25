@@ -121,7 +121,6 @@ impl GameData {
     }
 
     pub fn payLoan(&mut self, p : u8, amt : u32) -> Result<()> {
-        // let p = self.getPlayerIndex(&player)?;
         if self.players[p as usize].loanAmt < amt {
             // trying to repay too much, let's trim it
             self.players[p as usize].loanAmt = 0;

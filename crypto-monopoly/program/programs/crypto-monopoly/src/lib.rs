@@ -58,17 +58,4 @@ pub mod crypto_monopoly {
         return Ok(pay_loan::pay_loan(ctx, amt)?);
     }
 
-    
-
-    // This function lets the player chop a tree and get 1 wood. The session_auth_or macro
-    // lets the player either use their session token or their main wallet. (The counter is only
-    // there so that the player can do multiple transactions in the same block. Without it multiple transactions
-    // in the same block would result in the same signature and therefore fail.)
-    // #[session_auth_or(
-    //     ctx.accounts.player.authority.key() == ctx.accounts.signer.key(),
-    //     GameErrorCode::WrongAuthority
-    // )]
-    // pub fn chop_tree(ctx: Context<ChopTree>, _level_seed: String, counter: u16) -> Result<()> {
-    //     chop_tree::chop_tree(ctx, counter, 1)
-    // }
 }

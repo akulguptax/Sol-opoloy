@@ -6,11 +6,9 @@ use anchor_lang::prelude::*;
 pub struct Prop {
     pub id: u8,
     pub price: u32,
-    // pub color: u8,
     pub rent: u16,
     pub ownerId: u8,
     // pub hasMono: bool,
-    // pub name: String
 }
 
 
@@ -18,11 +16,9 @@ impl Prop {
     pub fn clear(&mut self) -> Result<()> {
         self.id = END_PROPS;
         self.price = DEFAULT_PRICE;
-        // self.color = 0;
         self.rent = 0;
         self.ownerId = END_PLAYERS;
         // self.hasMono = false;
-        // self.name = String::default();
         return Ok(());
     }
 

@@ -9,8 +9,6 @@ pub fn sell_prop(ctx: Context<InitPlayer>, pos : u8) -> Result<()> {
     // enforce:
     let game_data = &ctx.accounts.game_data;
     let p = game_data.getPlayerIndex(&ctx.accounts.signer.key())?;
-    // let payment = ctx.accounts.myinfo.pay;
-    // let pos = ctx.accounts.myinfo.pos;
     if pos >= END_PROPS || game_data.props[pos as usize].ownerId != p {
         return err!(GameErrorCode::WrongLocation);
     } else if game_data.turn != p {

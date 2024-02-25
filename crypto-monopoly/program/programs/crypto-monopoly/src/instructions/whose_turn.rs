@@ -16,7 +16,6 @@ pub struct WhoseTurn<'info> {
         seeds = [level_seed.as_ref()],
         bump,
     )]
-    // pub game_data: Account<'info, GameData>,
     pub game_data: Box<Account<'info, GameData>>,
     
     #[account(mut)]

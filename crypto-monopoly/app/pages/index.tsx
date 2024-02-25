@@ -46,16 +46,7 @@ export default function Home() {
         ) : (
           <>
             <PlayerTable />
-            <DisplayGameState />
-            {/* <SessionKeyButton /> */}
-            {/* <ChopTreeButton /> */}
-            <HStack>
-              {/* <BuyButton /> */}
-              <SellButton />
-              <RollDice />
-            </HStack>
-
-            <Board players={[]} />
+            <Board />
 
             {/* <RequestAirdrop /> */}
             {/* <DisplayNfts /> */}

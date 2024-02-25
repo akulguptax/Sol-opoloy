@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { Button } from "@chakra-ui/react";
 import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { useGameState } from "@/contexts/GameStateProvider";
+import { GameStateProvider, useGameState } from "@/contexts/GameStateProvider";
 import { GAME_DATA_SEED, gameDataPDA, program } from "@/utils/anchor";
 
 const InitPlayerButton = () => {
@@ -47,24 +47,38 @@ const InitPlayerButton = () => {
       // Combine the transfer and initPlayer instructions into a single transaction
       const transaction = new Transaction().add(
         initGameInstruction,
-        transferInstruction,
-        initPlayerInstruction
+        transferInstruction
       );
       const txSig = await sendTransaction(transaction, connection, {
         skipPreflight: true,
       });
-
+      console.log("Transactions");
+      console.log(txSig);
       console.log(gameData);
+      const transaction1 = new Transaction().add(
+        initPlayerInstruction
+      );
+      const txSig1 = await sendTransaction(transaction1, connection, {
+        skipPreflight: true,
+      });
+      console.log("second is:")
+      console.log(gameData);
+      console.log(txSig1);
+
       console.log(`https://explorer.solana.com/tx/${txSig}?cluster=devnet`);
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false); // set loading state back to false
     }
+    console.log("Clicked join game: ");
+    console.log(gameData)
   }, [publicKey, playerDataPDA, connection, joinGameAmount]);
+
+
   return (
     <>
-      {!gameData && publicKey && (
+      {gameData && publicKey && (
         <Button onClick={handleClick} isLoading={isLoading}>
           Join Game
         </Button>

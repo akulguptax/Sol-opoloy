@@ -63,6 +63,7 @@ impl GameData {
         // roll dice
         self.last_roll = 12;
         
+        
         // use dice to update move
         let new_pos = self.players[p as usize].makeMove(self.last_roll as u8);
 
@@ -94,24 +95,6 @@ impl GameData {
     }
 
     pub fn buyProp(&mut self, p : u8, pos : u8, payment : u32) -> Result<()> {
-
-        // // enforce:
-        // if payment < self.players[p].balance {
-        //     // enough funds
-        //     return false;
-        // } else if self.turn != p {
-        //     // player turn
-        //     return false;
-        // } else if self.state != State::PostRoll {
-        //     // player in correct state
-        //     return false;
-        // } else if pos != self.players[p].pos {
-        //     // pos is where the player is currently sitting
-        //     return false;
-        // } else if self.props[pos].price != payment {
-        //     // payment is right amount
-        //     return false;
-        // }
 
         // change
         //      player balance

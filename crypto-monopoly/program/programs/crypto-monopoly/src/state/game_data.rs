@@ -151,7 +151,7 @@ impl GameData {
     fn eventLoop(&mut self) {
         // for each player
         for player in self.players.iter_mut() {
-            if player.id >= END_PLAYERS {
+            if player.playerId >= END_PLAYERS {
                 break;
             }
             player.loanStep();

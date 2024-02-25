@@ -44,7 +44,7 @@ impl Player {
     }
 
     pub fn loanStep(&mut self) {
-        self.solOwed += (self.loanAmt >> DEFAULT_IR);
+        self.solOwed += (self.loanAmt >> DEFAULT_IR) as i32;
         if self.termLeft == 1 {
             self.balance -= self.loanAmt as u32; 
         }

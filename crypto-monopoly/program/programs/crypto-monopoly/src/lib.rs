@@ -42,8 +42,8 @@ pub mod crypto_monopoly {
         return Ok(get_player::get_player(ctx)?);
     }
 
-    pub fn buy_prop(ctx: Context<BuyPropContext>, _level_seed: String) -> Result<()> {
-        return Ok(buy_prop::buy_prop(ctx)?);
+    pub fn buy_prop(ctx: Context<BuyPropContext>, _level_seed: String, pos : u8, payment : u32) -> Result<()> {
+        return Ok(buy_prop::buy_prop(ctx, pos, payment)?);
     }
 
     // This function lets the player chop a tree and get 1 wood. The session_auth_or macro

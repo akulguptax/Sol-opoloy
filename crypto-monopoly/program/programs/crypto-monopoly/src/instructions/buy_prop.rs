@@ -4,12 +4,12 @@ use crate::state::player_data::Player;
 use crate::state::game_data::GameData;
 use anchor_lang::prelude::*;
 
-pub fn buy_prop(ctx: Context<BuyPropContext>) -> Result<()> {
+pub fn buy_prop(ctx: Context<BuyPropContext>, pos : u8, payment : u32) -> Result<()> {
     // enforce:
     let game_data = &ctx.accounts.game_data;
     let p = game_data.getPlayerIndex(&ctx.accounts.signer.key())?;
-    let payment = ctx.accounts.myinfo.pay;
-    let pos = ctx.accounts.myinfo.pos;
+    // let payment = ctx.accounts.myinfo.pay;
+    // let pos = ctx.accounts.myinfo.pos;
     if (payment as u32) < game_data.players[p as usize].balance {
         // enough funds
         return err!(GameErrorCode::InsufficientFunds);
@@ -30,11 +30,11 @@ pub fn buy_prop(ctx: Context<BuyPropContext>) -> Result<()> {
     return Ok(ctx.accounts.game_data.buyProp(p, pos, payment)?);
 }
 
-#[account]
-pub struct PurchaseInfo {
-    pub pos: u8,
-    pub pay: u32,
-}
+// #[account]
+// pub struct PurchaseInfo {
+//     pub pos: u8,
+//     pub pay: u32,
+// }
 
 #[derive(Accounts)]
 #[instruction(level_seed: String)]
@@ -48,8 +48,8 @@ pub struct BuyPropContext<'info> {
     )]
     pub game_data: Box<Account<'info, GameData>>,
 
-    #[account(mut)]
-    pub myinfo : Account<'info, PurchaseInfo>,
+    // #[account(mut)]
+    // pub myinfo : Account<'info, PurchaseInfo>,
 
     #[account(mut)]
     pub signer: Signer<'info>,

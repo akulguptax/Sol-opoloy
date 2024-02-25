@@ -8,6 +8,8 @@ pub fn start_turn(ctx: Context<InitPlayer>) -> Result<MoveResult> {
     let p = ctx.accounts.game_data.getPlayerIndex(&player)?;
     if p > 3 {
         return err!(GameErrorCode::PlayerIndexNotFound);
+    } else if ctx.accounts.game_data.turn != p {
+        return err!(GameErrorCode::NotYourTurn);
     }
     // if ctx.accounts.game_data.state != State::PreRoll || 
     //     ctx.accounts.game_data.turn as u8 != p {

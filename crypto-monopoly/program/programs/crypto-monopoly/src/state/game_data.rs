@@ -22,8 +22,9 @@ impl GameData {
         self.buyin = buyin_;
         self.n = 0;
         self.turn = 0;
-        for prop in self.props.iter_mut() {
-            prop.clear();
+        for i in 0..self.props.len() {
+            self.props[i].clear();
+            self.props[i].id = i as u8;
         }
         for player in self.players.iter_mut() {
             player.clear();
@@ -57,7 +58,7 @@ impl GameData {
     pub fn startTurn(&mut self, p: u8) -> MoveResult {
         // roll dice
         self.last_roll = 12;
-        
+
         // use dice to update move
         let new_pos = self.players[p as usize].makeMove(self.last_roll as u8);
 

@@ -17,7 +17,10 @@ const InitPlayerButton = () => {
     if (!publicKey) return;
     setIsLoading(true);
     try {
-      console.log("Joined Gamed");
+      console.log("Joined Game, using PDA and conn:");
+      console.log(gameDataPDA);
+      console.log(connection);
+
 
       const initPlayerInstruction = await program.methods
         .initPlayer(GAME_DATA_SEED)
@@ -33,6 +36,8 @@ const InitPlayerButton = () => {
       const txSig = await sendTransaction(transaction, connection, {
         skipPreflight: true,
       });
+
+      console.log(publicKey, gameDataPDA);
 
       console.log(`https://explorer.solana.com/tx/${txSig}?cluster=devnet`);
     } catch (error) {

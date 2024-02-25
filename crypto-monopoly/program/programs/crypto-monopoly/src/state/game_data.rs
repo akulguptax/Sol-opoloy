@@ -66,21 +66,20 @@ impl GameData {
         let mut retval = MoveResult::Noop;
         if self.props[new_pos as usize].ownerId == p {
             // your own property, do nothing
-            self.turn = (self.turn + 1) % self.n;
             retval = MoveResult::Noop;
         } else if self.props[new_pos as usize].ownerId < END_PLAYERS {
             // someone else owns this, pay rent!!
             let paid: u32 = self.props[new_pos as usize].rent.try_into().unwrap();
             self.players[p as usize].balance -= paid;
             self.players[self.props[new_pos as usize].ownerId as usize].balance += paid;
-            self.turn = (self.turn + 1) % self.n;
             retval = MoveResult::Rent;
         } else {
             // no one owns it, you have the option to buy it
             // self.state = State::PostRoll;
             retval = MoveResult::BuyOption;
         }
-
+        
+        self.turn = (self.turn + 1) % self.n;
         // self.eventLoop();
 
         return retval;

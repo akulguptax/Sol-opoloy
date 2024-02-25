@@ -50,6 +50,10 @@ pub mod crypto_monopoly {
         return Ok(get_loan::get_loan(ctx, amt)?);
     }
 
+    pub fn pay_loan(ctx: Context<InitPlayer>, _level_seed: String, amt : u32) -> Result<()> {
+        return Ok(pay_loan::pay_loan(ctx, amt)?);
+    }
+
     
 
     // This function lets the player chop a tree and get 1 wood. The session_auth_or macro

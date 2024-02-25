@@ -125,18 +125,18 @@ impl GameData {
         return Ok(());
     }
 
-    // pub fn payLoan(&mut self, player : Pubkey, amt : u32) -> bool {
-    //     let p = self.getPlayerIndex(&player)?;
-    //     if players[p].balance < amt {
-    //         return false; // too poor to pay back
-    //     } else if players[p].loanAmt < amt {
-    //         // trying to repay too much, let's trim it
-    //         amt = players[p].loanAmt;
-    //     }
-    //     players[p].balance -= amt;
-    //     players[p].loanAmt -= amt;
-    //     return true;
-    // }
+    pub fn payLoan(&mut self, p : u8, amt : u32) -> Result<()> {
+        // let p = self.getPlayerIndex(&player)?;
+        if self.players[p as usize].loanAmt < amt {
+            // trying to repay too much, let's trim it
+            self.players[p as usize].loanAmt = 0;
+            self.players[p as usize].balance -= amt;
+        } else {            
+            self.players[p as usize].balance -= amt;
+            self.players[p as usize].loanAmt -= amt;
+        }
+        return Ok(());
+    }
 
     // TODO - remove this once verifying this works
     pub fn getPlayerIndex(&self, p: &Pubkey) -> Result<u8> {

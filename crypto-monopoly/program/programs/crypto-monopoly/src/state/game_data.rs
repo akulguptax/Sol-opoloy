@@ -11,7 +11,7 @@ use crate::state::player_data::Player;
 pub struct GameData {
     buyin : u32,
     pub turn: u8,
-    pub state: State,
+    // pub state: State,
     pub props: [Prop; 28],
     pub players: [Player; 4],
     n : u8,
@@ -30,7 +30,7 @@ impl GameData {
         for player in self.players.iter_mut() {
             player.clear();
         }
-        self.state = State::PreRoll;
+        // self.state = State::PreRoll;
         return Ok(());
     }
 
@@ -44,7 +44,7 @@ impl GameData {
     }
 
     fn startGame(&mut self) {
-        self.state = State::PreRoll;
+        // self.state = State::PreRoll; 
         self.turn = 0;
     }
 
@@ -80,7 +80,7 @@ impl GameData {
             return MoveResult::Rent;
         } else {
             // no one owns it, you have the option to buy it
-            self.state = State::PostRoll;
+            // self.state = State::PostRoll;
             return MoveResult::BuyOption;
         }
     }

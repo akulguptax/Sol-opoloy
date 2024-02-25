@@ -16,9 +16,9 @@ pub fn buy_prop(ctx: Context<BuyPropContext>) -> Result<()> {
     } else if game_data.turn != p {
         // player turn
         return err!(GameErrorCode::NotYourTurn);
-    } else if game_data.state != State::PostRoll {
-        // player in correct state
-        return err!(GameErrorCode::NotYourTurn);
+    // } else if game_data.state != State::PostRoll {
+    //     // player in correct state
+    //     return err!(GameErrorCode::NotYourTurn);
     } else if pos != game_data.players[p as usize].pos {
         // pos is where the player is currently sitting
         return err!(GameErrorCode::WrongLocation);

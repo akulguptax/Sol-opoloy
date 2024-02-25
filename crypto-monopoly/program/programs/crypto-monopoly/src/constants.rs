@@ -29,15 +29,15 @@ pub enum Colors {
     Blue
 }
 
-#[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq, Copy)]
-pub enum State {
-    Empty,
-    GameSetupProgress,
-    GameSetupComplete,
-    PreRoll,
-    PostRoll,
-    AfterGame
-}
+// #[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq, Copy)]
+// pub enum State {
+//     Empty,
+//     GameSetupProgress,
+//     GameSetupComplete,
+//     PreRoll,
+//     PostRoll,
+//     AfterGame
+// }
 
 #[derive(AnchorDeserialize, AnchorSerialize, Clone, PartialEq, Copy)]
 pub enum MoveResult {

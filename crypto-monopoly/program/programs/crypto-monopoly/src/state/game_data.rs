@@ -104,18 +104,13 @@ impl GameData {
         return Ok(());
     }
 
-    // pub fn firesaleProp(&mut self, player : Pubkey, pos : u8) -> bool {
-    //     let p = self.getPlayerIndex(&player)?;
-    //     // enforce that player is owner of this pos
-    //     if p != props[pos].ownerId {
-    //         return false;
-    //     }
-    //     // release prop
-    //     props[pos].fireSold();
-
-    //     // then transfer funds
-    //     players[p].balance += props[pos].price;
-    // }
+    pub fn firesaleProp(&mut self, p : u8, pos : u8) -> Result<()> {
+        // release prop
+        self.props[pos as usize].fireSold();
+        // then transfer funds
+        self.players[p as usize].balance += (self.props[pos as usize].price >> 1);
+        return Ok(());
+    }
 
     pub fn getLoan(&mut self, p : u8, amt : u32) -> Result<()> {
         // TODO - figure out how to accept Sol here
@@ -160,30 +155,4 @@ impl GameData {
         // decrement termLeft
         // liquidate if expired loan
     }
-    // }
 }
-
-// pub struct GameData {
-//     pub total_wood_collected: u32,
-// }
-
-// impl GameData {
-//     pub fn on_tree_chopped(&mut self, amount_chopped: u32) -> Result<()> {
-//         match self.total_wood_collected.checked_add(amount_chopped) {
-//             Some(v) => {
-//                 if self.total_wood_collected >= MAX_WOOD_PER_TREE {
-//                     self.total_wood_collected = 0;
-//                     msg!("Tree successfully chopped. New Tree coming up.");
-//                 } else {
-//                     self.total_wood_collected = v;
-//                     msg!("Total wood chopped: {}", v);
-//                 }
-//             }
-//             None => {
-//                 msg!("The ever tree is completly chopped!");
-//             }
-//         };
-
-//         Ok(())
-//     }
-// }

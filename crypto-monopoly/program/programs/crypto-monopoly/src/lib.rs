@@ -46,6 +46,10 @@ pub mod crypto_monopoly {
         return Ok(buy_prop::buy_prop(ctx, pos, payment)?);
     }
 
+    pub fn sell_prop(ctx: Context<InitPlayer>, _level_seed: String, pos : u8) -> Result<()> {
+        return Ok(sell_prop::sell_prop(ctx, pos)?);
+    }
+
     pub fn get_loan(ctx: Context<InitPlayer>, _level_seed: String, amt : u32) -> Result<()> {
         return Ok(get_loan::get_loan(ctx, amt)?);
     }

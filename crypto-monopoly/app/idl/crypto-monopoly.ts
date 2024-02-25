@@ -11,11 +11,6 @@ export type CryptoMonopoly = {
           "isSigner": false
         },
         {
-          "name": "buyin",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
           "name": "signer",
           "isMut": true,
           "isSigner": true
@@ -30,6 +25,10 @@ export type CryptoMonopoly = {
         {
           "name": "levelSeed",
           "type": "string"
+        },
+        {
+          "name": "amt",
+          "type": "u32"
         }
       ]
     },
@@ -141,16 +140,80 @@ export type CryptoMonopoly = {
       "returns": {
         "defined": "MoveResult"
       }
+    },
+    {
+      "name": "getPlayer",
+      "accounts": [
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "defined": "Player"
+      }
+    },
+    {
+      "name": "buyProp",
+      "accounts": [
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "myinfo",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        }
+      ]
     }
   ],
   "accounts": [
     {
-      "name": "buyinInfo",
+      "name": "purchaseInfo",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "data",
+            "name": "pos",
+            "type": "u8"
+          },
+          {
+            "name": "pay",
             "type": "u32"
           }
         ]
@@ -364,28 +427,28 @@ export type CryptoMonopoly = {
   "errors": [
     {
       "code": 6000,
-      "name": "NotEnoughEnergy",
-      "msg": "Not enough energy"
-    },
-    {
-      "code": 6001,
-      "name": "WrongAuthority",
-      "msg": "Wrong Authority"
-    },
-    {
-      "code": 6002,
       "name": "NonEmptyGameState",
       "msg": "Game non-empty state"
     },
     {
-      "code": 6003,
+      "code": 6001,
       "name": "PlayerIndexNotFound",
       "msg": "Player Index Not Found"
     },
     {
-      "code": 6004,
+      "code": 6002,
       "name": "NotYourTurn",
       "msg": "Not your turn"
+    },
+    {
+      "code": 6003,
+      "name": "InsufficientFunds",
+      "msg": "Insufficient Funds or Wrong Amount"
+    },
+    {
+      "code": 6004,
+      "name": "WrongLocation",
+      "msg": "Wrong Location"
     }
   ]
 };
@@ -403,11 +466,6 @@ export const IDL: CryptoMonopoly = {
           "isSigner": false
         },
         {
-          "name": "buyin",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
           "name": "signer",
           "isMut": true,
           "isSigner": true
@@ -422,6 +480,10 @@ export const IDL: CryptoMonopoly = {
         {
           "name": "levelSeed",
           "type": "string"
+        },
+        {
+          "name": "amt",
+          "type": "u32"
         }
       ]
     },
@@ -533,16 +595,80 @@ export const IDL: CryptoMonopoly = {
       "returns": {
         "defined": "MoveResult"
       }
+    },
+    {
+      "name": "getPlayer",
+      "accounts": [
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "defined": "Player"
+      }
+    },
+    {
+      "name": "buyProp",
+      "accounts": [
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "myinfo",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        }
+      ]
     }
   ],
   "accounts": [
     {
-      "name": "buyinInfo",
+      "name": "purchaseInfo",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "data",
+            "name": "pos",
+            "type": "u8"
+          },
+          {
+            "name": "pay",
             "type": "u32"
           }
         ]
@@ -756,28 +882,28 @@ export const IDL: CryptoMonopoly = {
   "errors": [
     {
       "code": 6000,
-      "name": "NotEnoughEnergy",
-      "msg": "Not enough energy"
-    },
-    {
-      "code": 6001,
-      "name": "WrongAuthority",
-      "msg": "Wrong Authority"
-    },
-    {
-      "code": 6002,
       "name": "NonEmptyGameState",
       "msg": "Game non-empty state"
     },
     {
-      "code": 6003,
+      "code": 6001,
       "name": "PlayerIndexNotFound",
       "msg": "Player Index Not Found"
     },
     {
-      "code": 6004,
+      "code": 6002,
       "name": "NotYourTurn",
       "msg": "Not your turn"
+    },
+    {
+      "code": 6003,
+      "name": "InsufficientFunds",
+      "msg": "Insufficient Funds or Wrong Amount"
+    },
+    {
+      "code": 6004,
+      "name": "WrongLocation",
+      "msg": "Wrong Location"
     }
   ]
 };

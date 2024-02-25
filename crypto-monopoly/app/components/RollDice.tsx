@@ -45,7 +45,7 @@ const RollDice = () => {
 
   return (
     <>
-      {publicKey && gameState && (
+      {publicKey && gameData && (
         <HStack>
           {sessionWallet && sessionWallet.sessionToken != null && (
             <Button

@@ -13,7 +13,7 @@ This is an on-chain and Solana-specific (check out the locations) version of Mon
 We leveraged Anchor, a development platform for DApps on Solana. React/typescript constituted the bulk of the front-end client, while smart contracts for the chain were written on rust. Special shout out to Jonas Hahn from the Solana Foundation for his unbounded help and enthusiasm!
 
 ## Challenges we ran into
-We experienced many challenges, beginning with a steep learning curve to understand how to interact with the Solana blockchain, switching between public devnet and localnet, deploying smart contracts. updating the 'programID' and IDL in several different places, and much more. It required different ways of thinking - for example, Aman's EVM background lent mental models that were ill-suited for the Solana paradigm. We were forced to optimize the size of our structures due to the particular architecture of the chain, while sharing in the ever-present pains of version control.
+We experienced many challenges, beginning with a steep learning curve to understand how to interact with the Solana blockchain, switching between public devnet and localnet, deploying smart contracts. updating the 'programID' and IDL in several different places, and much more. We were forced to optimize the size of our structures due to the particular architecture of the chain, while sharing in the ever-present pains of version control.
 
 We physically slept 2 hours over the entire event, had several members fall sick, and consumed unhealthy levels of caffeine.
 

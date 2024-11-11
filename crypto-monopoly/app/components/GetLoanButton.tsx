@@ -11,10 +11,14 @@ const GetLoanButton = () => {
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const sessionWallet = useSessionWallet();
-  const { gameData, currentPlayer } = useGameState();
+  const { gameData } = useGameState();
   const [amount, setAmount] = useState("");
   const [isLoadingSession, setIsLoadingSession] = useState(false);
-  console.log(currentPlayer);
+
+  // Find the player that matches the connected wallet
+  const connectedPlayer = gameData?.players.find(
+    player => player.acct.toString() === publicKey?.toString()
+  );
 
   const onLoanClick = useCallback(async () => {
     setIsLoadingSession(true);
@@ -66,10 +70,9 @@ const GetLoanButton = () => {
           >
             Get Loan
           </Button>
-          {currentPlayer != undefined && (
+          {connectedPlayer && (
             <Button isLoading={isLoadingSession} width="300px">
-              You Owe ${gameData.players[currentPlayer].loanAmt} +{" "}
-              {gameData.players[currentPlayer].solOwed} Lamports
+              You Owe ${connectedPlayer.loanAmt} + {connectedPlayer.solOwed} Lamports
             </Button>
           )}
         </HStack>

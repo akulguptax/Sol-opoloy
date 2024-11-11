@@ -24,6 +24,8 @@ interface BoardSquareProps {
   details: string;
   position: number;
   type: string;
+  abbreviation: string;
+  playersHere: Player[];
 }
 const BoardSquare: React.FC<BoardSquareProps> = ({
   name,
@@ -32,21 +34,75 @@ const BoardSquare: React.FC<BoardSquareProps> = ({
   details,
   position,
   type,
+  abbreviation,
+  playersHere
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // Determine if markers should be on top or bottom based on position
+  const isTopRow = position < 11;
+  const isBottomRow = position >= 20 && position < 31;
+  
   return (
     <>
-      <Box
-        bg={color}
-        p="4"
-        borderColor="black"
-        borderWidth="3px"
-        borderRadius="lg"
-        boxShadow="md"
-        color="white"
-        onClick={onOpen}
-        cursor="pointer"
-      ></Box>
+      <Box position="relative" width="4vw" height="4vw">
+        <Box
+          bg={color}
+          borderColor="black"
+          borderWidth="3px"
+          borderRadius="lg"
+          boxShadow="md"
+          color="white"
+          onClick={onOpen}
+          cursor="pointer"
+          display="flex"
+          flexDirection="column"
+          justifyContent="space-between"
+          alignItems="center"
+          width="100%"
+          height="100%"
+          padding="0.3vw"
+        >
+          {/* Player markers */}
+          {playersHere.length > 0 && (
+            <HStack
+              spacing={1}
+              mb={isTopRow ? 0 : "auto"}
+              mt={isBottomRow ? 0 : "auto"}
+              minHeight="0.8vw"
+            >
+              {playersHere.map((player, idx) => (
+                <Box
+                  key={idx}
+                  bg={player.color || "gray.500"}
+                  color="white"
+                  borderRadius="full"
+                  minWidth="0.8vw"
+                  height="0.8vw"
+                  fontSize="0.6vw"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  {player.id}
+                </Box>
+              ))}
+            </HStack>
+          )}
+          
+          {/* Square abbreviation */}
+          <Text
+            fontSize="0.8vw"
+            fontWeight="bold"
+            color={color === "#faf9f6" || color === "yellow" ? "black" : "white"}
+            textAlign="center"
+            noOfLines={1}
+            width="100%"
+          >
+            {abbreviation}
+          </Text>
+        </Box>
+      </Box>
       <Modal
         isOpen={isOpen}
         onClose={onClose}

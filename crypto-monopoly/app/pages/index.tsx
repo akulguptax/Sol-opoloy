@@ -17,9 +17,19 @@ import Image from "next/image";
 import PlayerTable from "@/components/PlayerTable";
 import CreateGameButton from "@/components/CreateGameButton";
 import GetLoanButton from "@/components/GetLoanButton";
+import { useGameState } from "@/contexts/GameStateProvider";
 
 export default function Home() {
   const { publicKey } = useWallet();
+  const { gameData } = useGameState();
+
+  // Map gameData players to match the existing Player interface
+  const mappedPlayers: Player[] = gameData?.players.map(player => ({
+    id: player.playerId,
+    name: `Player ${player.playerId}`,
+    money: player.balance,
+    location: player.pos
+  })) || [];
 
   return (
     <Box>
@@ -48,7 +58,7 @@ export default function Home() {
           <>
             <PlayerTable />
             <br />
-            <Board />
+            <Board players={mappedPlayers} />
             <br />
             <br />
             <br />

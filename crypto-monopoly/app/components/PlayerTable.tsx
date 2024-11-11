@@ -44,7 +44,7 @@ const players = [
 const PlayerTable: React.FC = () => {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { gameData, playerDataPDA, currentPlayer } = useGameState();
+  const { gameData, currentPlayer } = useGameState();
 
   const handlePlayerClick = (player: any) => {
     setSelectedPlayer(player);
@@ -59,6 +59,7 @@ const PlayerTable: React.FC = () => {
             <Th>Player ID</Th>
             <Th isNumeric>Money</Th>
             <Th>Location</Th>
+            <Th>Loan</Th>
             <Th textAlign="center">Actions</Th>
           </Tr>
         </Thead>
@@ -66,20 +67,13 @@ const PlayerTable: React.FC = () => {
           {gameData?.players
             .filter((player) => player.playerId !== 4)
             .map((player, index) => (
-              <Tr key={index}>
+              <Tr 
+                key={index}
+                bg={currentPlayer === player.playerId ? "yellow.100" : "transparent"}
+              >
                 <Td>
-                  <Text
-                    fontSize="sm"
-                    // style={{
-                    //   fontWeight:
-                    //     currentPlayer === player.playerId ? "bold" : "normal",
-                    //   color:
-                    //     currentPlayer === player.playerId
-                    //       ? "purple"
-                    //       : "initial",
-                    // }}
-                  >
-                    {player?.playerId}
+                  <Text fontSize="sm">
+                    {player?.playerId} {currentPlayer === player.playerId ? "(Current Turn)" : ""}
                   </Text>
                 </Td>
                 <Td isNumeric>
@@ -87,6 +81,11 @@ const PlayerTable: React.FC = () => {
                 </Td>
                 <Td>
                   <Text fontSize="sm">{boardData[player?.pos]?.name}</Text>
+                </Td>
+                <Td>
+                  <Text fontSize="sm">
+                    ${player.loanAmt} ({player.termLeft} turns left)
+                  </Text>
                 </Td>
                 <Td textAlign="center">
                   <Tooltip label="View Details">

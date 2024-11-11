@@ -73,7 +73,7 @@ export const GameStateProvider = ({
         setGameData(data);
 
         const matchingPlayer = data.players.find(
-          (player) => player.acct === publicKey
+          (player) => player.acct.equals(publicKey)
         );
 
         if (matchingPlayer) {
